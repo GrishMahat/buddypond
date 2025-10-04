@@ -737,6 +737,20 @@ export default [
   }
 ,
   {
+    input: 'apps/based/emojipop/emojipop.js',
+    output: {
+      file: 'dist/apps/based/emojipop.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
     input: 'apps/based/emulator/emulator.js',
     output: {
       file: 'dist/apps/based/emulator.js',
@@ -1050,6 +1064,35 @@ export default [
   }
 ,
   {
+    input: 'apps/based/game-doom/game-doom.js',
+    output: {
+      file: 'dist/apps/based/game-doom.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
+    input: 'apps/based/game-doom/game-doom-style.js',
+    output: {
+      file: 'dist/dummy-css.js',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        extract: path.resolve('dist/apps/based/game-doom.css'),
+        minimize: true,
+        sourceMap: true
+      })
+    ]
+  }
+,
+  {
     input: 'apps/based/gifstudio/gifstudio.js',
     output: {
       file: 'dist/apps/based/gifstudio.js',
@@ -1201,6 +1244,93 @@ export default [
     plugins: [
       postcss({
         extract: path.resolve('dist/apps/based/image-search.css'),
+        minimize: true,
+        sourceMap: true
+      })
+    ]
+  }
+,
+  {
+    input: 'apps/based/imagegen/imagegen.js',
+    output: {
+      file: 'dist/apps/based/imagegen.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
+    input: 'apps/based/imagegen/imagegen-style.js',
+    output: {
+      file: 'dist/dummy-css.js',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        extract: path.resolve('dist/apps/based/imagegen.css'),
+        minimize: true,
+        sourceMap: true
+      })
+    ]
+  }
+,
+  {
+    input: 'apps/based/inventory/inventory.js',
+    output: {
+      file: 'dist/apps/based/inventory.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
+    input: 'apps/based/inventory/inventory-style.js',
+    output: {
+      file: 'dist/dummy-css.js',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        extract: path.resolve('dist/apps/based/inventory.css'),
+        minimize: true,
+        sourceMap: true
+      })
+    ]
+  }
+,
+  {
+    input: 'apps/based/inventory-admin/inventory-admin.js',
+    output: {
+      file: 'dist/apps/based/inventory-admin.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
+    input: 'apps/based/inventory-admin/inventory-admin-style.js',
+    output: {
+      file: 'dist/dummy-css.js',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        extract: path.resolve('dist/apps/based/inventory-admin.css'),
         minimize: true,
         sourceMap: true
       })
