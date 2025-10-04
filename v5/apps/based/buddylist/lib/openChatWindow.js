@@ -340,15 +340,25 @@ async function initializeChatWindow(windowType, contextName, chatWindow, client)
 }
 
 function clearBuddyNewMessages(contextName) {
+    // console.log("clearBuddyNewMessages for", contextName);
+    // console.log(this.data.profileState)
+    // Remark: Better to just always set to false since the event is an absolute confirmation
+    // local data state might be out of sync, easier to just always set to false
+    this.buddyServerClient.receivedInstantMessage(contextName, (err, re) => {
+        // console.log("receivedInstantMessage", err, re);
+    });
+    // 10/4/2025 Previously we only set to false if it was true
+    /*
     if (
         this.data.profileState?.buddylist?.[contextName]?.newMessages
     ) {
         this.data.profileState.buddylist[contextName].newMessages = false;
-        // console.log("SETTING newMessages to false for", contextName);
+        console.log("SETTING newMessages to false for", contextName);
         this.buddyServerClient.receivedInstantMessage(contextName, (err, re) => {
             // console.log("receivedInstantMessage", err, re);
         });
     }
+    */
 }
 
 async function renderMessages(contextName, chatWindow) {

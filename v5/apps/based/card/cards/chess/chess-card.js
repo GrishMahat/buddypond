@@ -1,6 +1,6 @@
 export default function applyData(el, data) {
     const $el = $(el);
-    console.log('open chess card', data);
+    // console.log('open chess card', data);
 
     if (data.message.from === this.bp.me) {
         $el.find('.card-chess-header').html('Sent Chess Challenge');

@@ -1,7 +1,7 @@
 export default function applyData(el, data) {
     const $el = $(el);
   
-    console.log('incoming transfer card data', data);
+    // console.log('incoming transfer card data', data);
 
     // Ensure data exists and provide defaults
     const safeData = {

@@ -603,6 +603,20 @@ let legacyCommands = {
     description: 'Greed Game',
     icon: 'frvr-greed'
   },
+  basketball: {
+    command: function (params, context) {
+      bp.open('frvr-basketball', { context: context.contextName, output: context.windowType });
+    },
+    description: 'Basketball Game',
+    icon: 'frvr-basketball'
+  },
+  kittenforce: {
+    command: function (params, context) {
+      bp.open('kittenforce', { context: context.contextName, output: context.windowType });
+    },
+    description: 'Kitten Force Game',
+    icon: 'kittenforce'
+  },
   emojipop: {
     command: function (params) {
       bp.open('emojipop');

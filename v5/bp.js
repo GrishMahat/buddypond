@@ -5,7 +5,7 @@ if (typeof window !== 'undefined') {
     window.bp = bp;
 }
 
-bp.version = '7.1.2';
+bp.version = '7.1.3';
 bp.log = console.log;
 bp.log = function noop() { }
 bp.error = console.error;
@@ -17,12 +17,9 @@ if (window.location.href.includes('buddypond') || window.location.href.includes(
     bp.mode = 'prod';
 }
 
-bp.config = {
-    host: ""
-};
+bp.config = { host: "" };
 
 const localIp = window.location.origin;
-
 
 // Endpoint Constants
 const ENDPOINTS = {
