@@ -283,6 +283,14 @@ export default {
     "onClick": "bp.open('portfolio')",
     "categories": ["finance"]
   },
+  "orderbook": {
+    "icon": "desktop/assets/images/icons/icon_orderbook_64.webp",
+    "label": "Order Book",
+    "description": "Manage your trading orders",
+    "onClick": "bp.open('orderbook')",
+    "categories": ["finance"],
+    "enumerable": false
+  },
   "audio-player": {
     "icon": "desktop/assets/images/icons/icon_audio-player_64.webp",
     "label": "Audio Player",

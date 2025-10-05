@@ -19,7 +19,7 @@ export default async function eventBind(parent) {
             amount: $('#order-amount').val()
         };
         try {
-            let result = await this.orderbook.placeOrder(parent, order);
+            let result = await this.orderbook.placeOrder.call(this, parent, order);
             console.log('placeOrder result', result);
             $('.orderbook-error', parent).text('');
             $('.orderbook-order-status', parent).text('Order placed: ' + JSON.stringify(result));

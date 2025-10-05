@@ -5,6 +5,9 @@ import Resource from '../resource/lib/Resource.js';
 import OrderbookClass from './lib/Orderbook.js';
 
 import createInitialOrders from './lib/createInitialOrders.js';
+import listOrdersPerMarket from './lib/listOrdersPerMarket.js';
+
+import apiClient from './lib/apiClient.js';
 
 export default class Orderbook {
 
@@ -18,7 +21,7 @@ export default class Orderbook {
     async init() {
         this.html = await this.bp.load('/v5/apps/based/orderbook/orderbook.html');
         this.css = await this.bp.load('/v5/apps/based/orderbook/orderbook.css');
-
+        this.client = apiClient;
         // load coin so we can get market pair information
         await this.bp.load('coin');
 
@@ -84,3 +87,4 @@ export default class Orderbook {
 Orderbook.prototype.render = render;
 Orderbook.prototype.eventBind = eventBind;
 Orderbook.prototype.createInitialOrders = createInitialOrders;
+Orderbook.prototype.listOrdersPerMarket = listOrdersPerMarket;

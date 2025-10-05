@@ -7,9 +7,17 @@ export default async function render(parent, options = {}) {
     let selector = $('#market-pairs', parent);
     // get all the markets by getting all the coins and pairing them with BUX
 
-    let coins = await this.bp.apps.coin.resource.all();
+    let result;
+    try {
+      result = await this.bp.apps.coin.resource.all();
+    } catch (err) {
+      console.error('Error fetching coins', err);
+      $('.order-error').text('Error fetching coins');
+      return;
+    }
 
-    console.log('coins', coins);
+    console.log('result', result);
+    let coins = result.results;
 
     // order coins by symbol
     coins = coins.sort((a, b) => {
@@ -42,7 +50,7 @@ export default async function render(parent, options = {}) {
         // assume this is the market pair
         $('#market-pairs', parent).val(options.context);
     }
-    this.orderbook.listOrdersPerMarket(parent, options.context);
+    this.orderbook.listOrdersPerMarket.call(this, parent, options.context);
     this.orderbook.listMarketMakersPerMarket(parent, options.context);
 
     if (this.bp.me === 'Randolph') {
