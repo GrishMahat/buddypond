@@ -131,7 +131,7 @@
 
 /* disabled give button */
 .fishing-give-item {
-
+  display: none;
   background: #ccc;
   color: #666;
   border: none;
