@@ -16,7 +16,7 @@ export default class BuddyScript {
     }
 
     isValidBuddyScript(command) {
-        // console.log("Checking if valid command", command, this.commands);
+        console.log("Checking if valid command", command, this.commands);
         return this.commands[command];
     }
 
@@ -60,6 +60,7 @@ export default class BuddyScript {
     }
 
     executeCommand(command, context, options = {}) {
+      console.log("Executing command", this.commandActions, command, context, options);
         if (this.commandActions[command]) {
             // console.log("Executing command action", command, context, this.commandActions[command]);
             context.data = this.commandActions[command]; // maybe?
@@ -69,8 +70,9 @@ export default class BuddyScript {
             return this.commandActions[command].call(this, context, options);
         } else {
             // console.log(`Executing command: ${command}`);
+            console.log('No command action found for', command);
             console.log(command, context);
-            return true; // Default action if command is recognized but has no specific handler
+            return false; // No command found
         }
     }
 
@@ -83,6 +85,7 @@ export default class BuddyScript {
             let commandParts = part.trim().split(' ');
             let command = commandParts[0].substr(1);
             let commandArgs = commandParts.slice(1);
+            console.log("aaCommand parts", command, commandParts, commandArgs);
             // console.log("aaCommand parts", command, commandParts, commandArgs);
             if (this.isValidBuddyScript(command)) {
                 results.push(this.executeCommand(command, commandArgs, options));
