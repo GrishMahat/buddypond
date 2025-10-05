@@ -84,7 +84,7 @@ export default class Fishing {
       Description: ${item.item_def.description}<br/>
       <button class="fishing-equip-item" data-inventory-id="${item.id}">Equip</button>
       ${favoriteButton}
-      <button class="fishing-give-item" data-inventory-id="${item.id}">Give</button>
+      <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
     </div>`;
   }
@@ -96,18 +96,21 @@ export default class Fishing {
 
     let favoriteButton = `<button class="fishing-favorite-item" data-inventory-id="${item.id}">Favorite</button>`;
     if (item.favorited === 1) {
-      favoriteButton = `<button class="fishing-unfavorite-item" data-inventory-id="${item.id}">Unfavorite</button>`;
+      favoriteButton = `<button class="fishing-unfavorite-item" data-inventory-id="${item.id}">❤️</button>`;
     }
 
     console.log('Rendering fish inventory item:', item);
+    let metadata = item.metadata ? JSON.parse(item.metadata) : {};
+    item.value = metadata.value || item.value || 0;
     return `<div class="fishing-item">
       <strong>${item.item_def.name}</strong><br/>
       Type: ${item.item_def.type}<br/>
       Rarity: ${item.item_def.rarity}<br/>
+      Value: ${item.value} coins<br/>
       Description: ${item.item_def.description}<br/>
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
       ${favoriteButton}
-      <button class="fishing-give-item" data-inventory-id="${item.id}">Give</button>
+      <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
     </div>`;
   }
 
@@ -172,7 +175,7 @@ export default class Fishing {
       const inventoryId = $(e.currentTarget).data('inventory-id');
       await this.client.apiRequest(`/inventory/favorite`, 'POST', { inventory_id: inventoryId });
       // update the button to unfavorite
-      $(e.currentTarget).replaceWith(`<button class="fishing-unfavorite-item" data-inventory-id="${inventoryId}">Unfavorite</button>`);
+      $(e.currentTarget).replaceWith(`<button class="fishing-unfavorite-item" data-inventory-id="${inventoryId}">❤️</button>`);
     });
 
     $('.fishing-app', this.win.content).on('click', '.fishing-unfavorite-item', async (e) => {
@@ -181,7 +184,7 @@ export default class Fishing {
       // update the button to favorite
       $(e.currentTarget).replaceWith(`<button class="fishing-favorite-item" data-inventory-id="${inventoryId}">Favorite</button>`);
     });
-    
+
     // sell item 
     $('.fishing-app', this.win.content).on('click', '.fishing-sell-item', async (e) => {
       const inventoryId = $(e.currentTarget).data('inventory-id');
@@ -192,9 +195,18 @@ export default class Fishing {
         // remove the item from the inventory list
         $(e.currentTarget).closest('.fishing-item').remove();
         // show a message
-        $('.fishing-results', this.win.content).prepend(`<p>Sold item for ${result.value} coins.</p>`);
+        let value = result.item.value || 0;
+        $('.fishing-results', this.win.content).prepend(`<p>Sold item for ${value} coins.</p>`);
       } else {
-        alert(`Error selling item: ${result.error}`);
+
+        console.log('Error selling item:', result);
+        if (result.error) {
+          $('.fishing-status', this.win.content).html(
+            `<span style="color:red;">Error: ${result.error}</span>`
+          );
+          return;
+        }
+
       }
     });
 
@@ -231,6 +243,13 @@ export default class Fishing {
       let result = await this.client.apiRequest('/cast', 'GET');
       console.log('Fishing cast result:', result);
 
+      if (result.error) {
+        $('.fishing-status', this.win.content).html(
+          `<span style="color:red;">Error: ${result.error}</span>`
+        );
+        return;
+      }
+
       let resultsDiv = $('.fishing-results', this.win.content).empty();
       let resultHtml = `<p>You caught a <strong>${result.name}</strong> (Rarity: ${result.rarity})</p>`;
       resultHtml += `<p>Value: ${result.value} coins</p>`;
@@ -264,9 +283,19 @@ export default class Fishing {
     let result = await this.client.apiRequest('/sell-all', 'POST');
     console.log('Sell all items result:', result);
 
-    let resultsDiv = $('.fishing-results', this.win.content).empty();
-    let resultHtml = `<p>Sold ${result.sold_count} items for a total of ${result.totalValue} coins.</p>`;
-    resultsDiv.prepend(resultHtml);
+
+    if (result.success) {
+      let resultsDiv = $('.fishing-results', this.win.content).empty();
+      let resultHtml = `<p>Sold ${result.sold_count} items for a total of ${result.totalValue} coins.</p>`;
+      resultsDiv.prepend(resultHtml);
+
+    }
+    if (result.error) {
+      $('.fishing-status', this.win.content).html(
+        `<span style="color:red;">Error: ${result.error}</span>`
+      );
+      return;
+    }
 
     await this.renderFishInventory();
   }
