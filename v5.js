@@ -54,6 +54,7 @@ const DEV_ENDPOINTS = {
   gamblor: `${localIp}:9012/api/gamblor/api/v6`,
   imageSearch: `${localIp}:9005/api/image-search`,
   messagesApi: `${localIp}:8788/api/messages`,
+  orderbook: `${localIp}:9003/api/orderbook`,
   portfolio: `${localIp}:9002/api/portfolio`,
   randolph: `${localIp}:8889/api/randolph`,
   uploads: `${localIp}:9004/api/uploads`,
@@ -130,6 +131,7 @@ function assignBuddyPondEndpoints(endpoints) {
   buddypond.adminEndpoint = endpoints.admin;
   buddypond.errorsEndpoint = endpoints.errors;
   buddypond.uploadsEndpoint = endpoints.uploads;
+  buddypond.orderbookEndpoint = endpoints.orderbook;
   buddypond.portfolioEndpoint = endpoints.portfolio;
   buddypond.coinEndpoint = endpoints.coin;
   buddypond.randolphEndpoint = endpoints.randolph;
@@ -161,7 +163,7 @@ window.bp_init = async function () {
 
   // if not running from buddypond.com, use DEV_ENDPOINTS
   if(window.location.hostname !== 'buddypond.com') {
-    endpoints.host = DEV_ENDPOINTS.host; // manaul override for development
+    endpoints.host = DEV_ENDPOINTS.host; // manual override for development
   }
 
   // console.log(endpoints);
