@@ -395,6 +395,8 @@ export default class Fishing {
         return;
       }
 
+     $('.fishing-status', this.win.content).html('');
+
       let resultsDiv = $('.fishing-results', this.win.content).empty();
       let resultHtml = `<p>You caught a <strong>${result.name}</strong> (Rarity: ${result.rarity})</p>`;
       resultHtml += `<p>Value: ${result.value} coins</p>`;
