@@ -1,7 +1,7 @@
 const client = {};
 
-client.endpoint = buddypond.gamblorEndpoint;
-client.endpoint = 'http://127.0.0.1:9999/api/fishing'; // local dev
+client.endpoint = buddypond.fishingEndpoint;
+// client.endpoint = 'http://127.0.0.1:9999/api/fishing'; // local dev
 
 client.apiRequest = async (uri, method = 'GET', data = null) => {
 

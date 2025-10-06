@@ -1,7 +1,7 @@
 const localIp = window.location.origin;
 const currentPath = window.location.pathname;
 const localToken = localStorage.getItem('qtokenid');
-let devmode = false;
+let devmode = true;
 
 // Endpoint Constants
 const ENDPOINTS = {
@@ -24,6 +24,7 @@ const ENDPOINTS = {
   errors: 'https://buddypond.com/api/errors',
   randolph: 'https://buddypond.com/api/randolph',
   buddyProxy: 'https://buddypond.com/api/proxy',
+  fishing: 'https://buddypond.com/api/fishing',
   // Remark: switch back to a.buddypond.com/api/buddylist ( only if non-discord mode )
   // Attempting to isolate 1006 errors from CF platform
   //buddylistWs: 'wss://buddypond.com/api/buddylist/ws/buddylist',
@@ -52,6 +53,7 @@ const DEV_ENDPOINTS = {
   coin: `${localIp}:9001/api/coin`,
   errors: `${localIp}:9010/api/errors`,
   gamblor: `${localIp}:9012/api/gamblor/api/v6`,
+  fishing: `${localIp}:9999/api/fishing`,
   imageSearch: `${localIp}:9005/api/image-search`,
   messagesApi: `${localIp}:8788/api/messages`,
   orderbook: `${localIp}:9003/api/orderbook`,
@@ -141,6 +143,7 @@ function assignBuddyPondEndpoints(endpoints) {
   buddypond.apiKeysEndpoint = endpoints.apiKeys;
   buddypond.chessWsEndpoint = endpoints.chessWs;
   buddypond.gamblorEndpoint = endpoints.gamblor;
+  buddypond.fishingEndpoint = endpoints.fishing;
   buddypond.videoChatEndpoint = endpoints.videoChat;
 }
 

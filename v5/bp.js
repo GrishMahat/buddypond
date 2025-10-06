@@ -40,6 +40,7 @@ const ENDPOINTS = {
   randolph: 'https://buddypond.com/api/randolph',
   buddyProxy: 'https://buddypond.com/api/proxy',
   buddylistWs: 'wss://buddypond.com/api/buddylist/ws/buddylist',
+  fishing: 'https://buddypond.com/api/fishing',
   chessWs: 'wss://buddypond.com/api/chess/ws/chess',
   messagesWs: 'wss://buddypond.com/api/messages/ws/messages',
   pondsWs: 'wss://buddypond.com/api/messages/ws/ponds',
@@ -59,9 +60,11 @@ const DEV_ENDPOINTS = {
   gamblor: `${localIp}:9012/api/gamblor`,
   imageSearch: `${localIp}:9005/api/image-search`,
   messagesApi: `${localIp}:8788/api/messages`,
+  orderbook: `${localIp}:9003/api/orderbook`,
   portfolio: `${localIp}:9002/api/portfolio`,
   randolph: `${localIp}:8889/api/randolph`,
   uploads: `${localIp}:9004/api/uploads`,
+  fishing: `${localIp}:9999/api/fishing`,
   videoChat: 'wss://192.168.200.59:8001/videochat/ws',
   buddylistWs: `${localIp.replace('http://', 'ws://')}:8787/api/buddylist/ws/buddylist`,
   chessWs: `${localIp.replace('http://', 'ws://')}:5556/api/chess/ws/chess`,
@@ -100,6 +103,7 @@ function assignBuddyPondEndpoints(endpoints) {
   buddypond.apiKeysEndpoint = endpoints.apiKeys;
   buddypond.chessWsEndpoint = endpoints.chessWs;
   buddypond.gamblorEndpoint = endpoints.gamblor;
+  buddypond.fishingEndpoint = endpoints.fishing;
   buddypond.videoChatEndpoint = endpoints.videoChat;
 }
 
