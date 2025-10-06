@@ -120,8 +120,8 @@ export default function createWebSocketClient(reconnect = false) {
             console.log('buddy_removed WebSocket message received:', parseData);
             this.bp.emit('profile::buddy::out', { name: parseData.buddyname });
             break;
-          case 'rewards:response':
-            // console.log('rewards:response message received:', parseData);
+          case 'rewards::response':
+            console.log('rewards:response message received:', parseData);
             if (parseData.success) {
               bp.emit('buddylist-websocket::reward', {
                 success: true,

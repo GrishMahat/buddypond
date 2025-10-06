@@ -168,7 +168,7 @@ export default function registerEventHandlers() {
             // console.log('setStatus', err, re);
 
             if (status === 'signout') {
-              this.logout()
+                this.logout()
             }
         });
         /*
@@ -376,7 +376,27 @@ export default function registerEventHandlers() {
             console.log(data.message);
             return;
         }
-        rollToNumber($('#menu-bar-coin-balance'), data.message.newBalance)
+
+        console.log('buddylist-websocket::reward', data);
+
+        this.data = this.data || {};
+        this.data.coinBalance = data.message.newBalance || this.data.coinBalance;
+
+        /*
+        if (data.message.addToBalance) {
+          // get current balance locally
+          this.data.coinBalance += (data.message.amount || data.message.addToBalance);
+        }
+        */
+        if (data.message.amount && !data.message.newBalance) {
+            this.data.coinBalance += data.message.amount;
+        }
+        // console.log('Updating local coin balance to', this.data.coinBalance);
+        //console.log('current this.data', this.data);
+
+        console.log('incoming newBalance', data.message.newBalance)
+        console.log('setting coin balance to', this.data.coinBalance)
+        rollToNumber($('#menu-bar-coin-balance'), this.data.coinBalance)
 
         // TODO: better condition to check if portfolio app is loaded and ready
         if (this.bp.apps.portfolio && this.bp.apps.portfolio.portfolioWindow && this.bp.apps.portfolio.portfolioWindow.content && this.bp.apps.portfolio.portfolioData) {
@@ -406,6 +426,9 @@ export default function registerEventHandlers() {
     this.bp.on('buddylist-websocket::coinBalance', 'update-local-coin-balance', async (data) => {
         console.log('buddylist-websocket::coinBalance', data);
         if (typeof data.message.balance === 'number') {
+            this.data = this.data || {};
+            this.data.coinBalance = data.message.balance;
+            console.log('Setting local coin balance to', this.data.coinBalance);
             rollToNumber($('#menu-bar-coin-balance'), data.message.balance)
         } else {
             this.faucetAttempts++;
@@ -479,3 +502,5 @@ function rollToNumber($el, value) {
         digitIndex++;
     });
 }
+
+window.rollToNumber = rollToNumber; // make globally available for now, used in registerEventHandlers

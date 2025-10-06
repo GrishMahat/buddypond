@@ -70,7 +70,7 @@ export default class Inventory {
 
     return {
       id: 'inventory',
-      title: 'Hello World',
+      title: 'Buddy Inventory',
       icon: 'desktop/assets/images/icons/icon_buddy-frog_64.webp',
       position: 'center',
       parent: $('#desktop')[0],

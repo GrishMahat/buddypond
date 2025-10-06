@@ -316,6 +316,7 @@ export default class Fishing {
         value = value.toLocaleString();
         $('.fishing-results', this.win.content).prepend(`<p>Sold item for ${value} coins.</p>`);
 
+        /*
         if (result.value && result.value > 0) {
           console.log('Emitting reward event for sold item:', result);
               bp.emit('buddylist-websocket::reward', {
@@ -326,6 +327,7 @@ export default class Fishing {
                 reward: result.reward,
               });
         }
+        */
 
       } else {
 
@@ -460,6 +462,7 @@ export default class Fishing {
       resultsDiv.prepend(resultHtml);
 
 
+      /*
       if (result.totalValue && result.totalValue > 0) {
         console.log('Emitting reward event for sold item:', result);
             bp.emit('buddylist-websocket::reward', {
@@ -471,6 +474,7 @@ export default class Fishing {
             });
 
       }
+      */
 
 
     }
