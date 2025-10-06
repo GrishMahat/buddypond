@@ -1,6 +1,6 @@
 .fishing-app {
   font-family: "Trebuchet MS", sans-serif;
-  background: linear-gradient(to bottom, #ccefff 0%, #87ceeb 100%);
+  background: var(--gradient_water-background);
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -16,7 +16,7 @@
 .fishing-header h1 {
   font-size: 2em;
   color: #004466;
-  text-shadow: 1px 1px 0px #fff;
+  /* text-shadow: 1px 1px 0px #fff; */
 }
 
 .fishing-status {
@@ -34,7 +34,7 @@
 }
 
 .fishing-cast-section {
-  background: #ffffffaa;
+  background: var(--desktop_element-background);
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -61,7 +61,6 @@
 }
 
 .fishing-results {
-  background: #eef9ff;
   border: 1px solid #aee1ff;
   padding: 10px;
   width: 100%;
@@ -74,6 +73,10 @@
 .fishing-results p {
   margin: 0 0 8px 0;
   font-size: 1em;
+}
+
+.fishing-inventory {
+  background: var(--desktop_element-background);
 }
 
 .fishing-inventory-list {
@@ -91,6 +94,7 @@
 }
 
 .fishing-sidebar {
+  background: var(--desktop_element-background);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -98,7 +102,6 @@
 
 .fishing-equipped, 
 .fishing-items {
-  background: #ffffffdd;
   border-radius: 12px;
   padding: 12px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
@@ -108,7 +111,6 @@
 .fishing-items h2 {
   font-size: 1.2em;
   margin-bottom: 8px;
-  color: #003366;
   border-bottom: 1px solid #ddd;
   padding-bottom: 4px;
 }
@@ -118,17 +120,13 @@
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 6px;
-  background: #f9f9f9;
+  background: var(--desktop_element-background);
 }
 
 .fishing-item-sold {
   /* green border / green background */
   border: 1px solid #090;
   background: #e6ffe6;
-}
-
-.fishing-item strong {
-  color: #222;
 }
 
 .fishing-item input[type="checkbox"] {

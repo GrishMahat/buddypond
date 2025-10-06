@@ -91,6 +91,9 @@ export default {
             'background': '#f0f0f0',
             'color': '#181818',
             'border': '1px solid #cccccc'
+        },
+        'gradient_water': {
+          'background': 'linear-gradient(to bottom, #ccefff 0%, #87ceeb 100%)'
         }
     }
 }

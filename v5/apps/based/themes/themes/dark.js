@@ -81,7 +81,13 @@ export default {
         'ui_table_row_even': {
             'background': '#242429',
             'color': '#E3E3E3'
+        },
+        'gradient_water': {
+          /* dark mode water gradient */
+          /* 'background': 'linear-gradient(to bottom, #ccefff 0%, #87ceeb 100%)'*/
+          'background': 'linear-gradient(to bottom, #0f2027, #203a43, #2c5364)'
         }
+
 
     }
 }
