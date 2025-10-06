@@ -25,6 +25,7 @@ const ENDPOINTS = {
   randolph: 'https://buddypond.com/api/randolph',
   buddyProxy: 'https://buddypond.com/api/proxy',
   fishing: 'https://buddypond.com/api/fishing',
+  inventory: 'https://buddypond.com/api/inventory',
   // Remark: switch back to a.buddypond.com/api/buddylist ( only if non-discord mode )
   // Attempting to isolate 1006 errors from CF platform
   //buddylistWs: 'wss://buddypond.com/api/buddylist/ws/buddylist',
@@ -54,6 +55,7 @@ const DEV_ENDPOINTS = {
   errors: `${localIp}:9010/api/errors`,
   gamblor: `${localIp}:9012/api/gamblor/api/v6`,
   fishing: `${localIp}:9999/api/fishing`,
+  inventory: `${localIp}:10000/api/inventory`,
   imageSearch: `${localIp}:9005/api/image-search`,
   messagesApi: `${localIp}:8788/api/messages`,
   orderbook: `${localIp}:9003/api/orderbook`,
@@ -106,6 +108,8 @@ function configureDiscordMode(endpoints) {
       apiKeys: `${host}/.proxy/api/api-keys`,
       admin: `${host}/.proxy/api/admin`,
       gamblor: `${host}/.proxy/api/gamblor`,
+      fishing: `${host}/.proxy/api/fishing`,
+      inventory: `${host}/.proxy/api/inventory`,
       portfolio: `${host}/.proxy/api/portfolio`,
       uploads: `${host}/.proxy/api/uploads`,
       pondsWs: `${host.replace('https://', 'wss://')}/.proxy/api/messages/ws/ponds`,
@@ -143,6 +147,7 @@ function assignBuddyPondEndpoints(endpoints) {
   buddypond.apiKeysEndpoint = endpoints.apiKeys;
   buddypond.chessWsEndpoint = endpoints.chessWs;
   buddypond.gamblorEndpoint = endpoints.gamblor;
+  buddypond.inventoryEndpoint = endpoints.inventory;
   buddypond.fishingEndpoint = endpoints.fishing;
   buddypond.videoChatEndpoint = endpoints.videoChat;
 }
