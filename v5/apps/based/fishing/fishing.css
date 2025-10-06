@@ -121,6 +121,12 @@
   background: #f9f9f9;
 }
 
+.fishing-item-sold {
+  /* green border / green background */
+  border: 1px solid #090;
+  background: #e6ffe6;
+}
+
 .fishing-item strong {
   color: #222;
 }

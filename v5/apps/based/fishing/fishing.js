@@ -38,11 +38,47 @@ export default class Fishing {
       this.bindEvents();
     }
 
+    // get latest /api/fishing/settings player settings
+    let playerSettings = await this.client.apiRequest('/settings', 'GET');
+    console.log('Player fishing settings:', playerSettings);
+    this.updatePlayerSettings(playerSettings.settings);
+    this.bindPlayerSettings();
     await this.loadEquipped();
     await this.loadItems();
     await this.renderFishInventory();
 
     return this.win;
+  }
+
+  bindPlayerSettings() {
+    $('#auto-sell-fish', this.win.content).on('change', async (e) => {
+      let enabled = e.currentTarget.checked;
+      console.log('Auto-sell changed:', enabled);
+      await this.savePlayerSettings('auto_sell_enabled', enabled);
+    });
+
+    $('#auto-equip-items', this.win.content).on('change', async (e) => {
+      let enabled = e.currentTarget.checked;
+      console.log('Auto-equip changed:', enabled);
+      await this.savePlayerSettings('auto_equip_enabled', enabled);
+    });
+
+
+
+  }
+
+  savePlayerSettings(key, value) {
+    console.log('Saving player setting:', key, value);
+    return this.client.apiRequest('/settings', 'POST', { key, value });
+  }
+
+  updatePlayerSettings(settings) {
+    if (settings.auto_sell_enabled == 'true' || settings.auto_sell_enabled === true) {
+      $('#auto-sell-fish', this.win.content).prop('checked', settings.auto_sell_enabled);
+    }
+    if (settings.auto_equip_enabled == 'true' || settings.auto_equip_enabled === true) {
+      $('#auto-equip-items', this.win.content).prop('checked', settings.auto_equip_enabled);
+    }
   }
 
   /** Window config */
@@ -83,6 +119,7 @@ export default class Fishing {
       Type: ${item.item_def.type}<br/>
       Rarity: ${item.item_def.rarity}<br/>
       Description: ${item.item_def.description}<br/>
+      Durability: ${item.durability || 'N/A'}<br/>
       <button class="fishing-equip-item" data-inventory-id="${item.id}">Equip</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
@@ -132,6 +169,8 @@ export default class Fishing {
       mutationStr = `<br/>Mutation: ${metadata.mutation} <br/>`;
     }
 
+    //       Description: ${item.item_def.description}<br/>
+
     return `<div class="fishing-item">
       <strong>${item.item_def.name}</strong><br/>
       Type: ${item.item_def.type}<br/>
@@ -139,7 +178,6 @@ export default class Fishing {
       Rarity: ${item.item_def.rarity}<br/>
       Value: ${item.value} coins<br/>
       ${mutationStr}
-      Description: ${item.item_def.description}<br/>
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
@@ -172,12 +210,12 @@ export default class Fishing {
       equipped.forEach(item => {
         this.equippedItems.push(item.inventory_id);
         // TODO: add back durability and charges display
-        // Durability: ${item.metadata.durability}<br/>
         equippedHtml += `<div class="fishing-item">
           <strong>${item.metadata.key}</strong><br/>
           Type: ${item.metadata.key}<br/>
           Rarity: ${item.metadata.rarity}<br/>
           <em>${item.metadata.description}</em><br/>
+          Durability: ${item.item_durability}<br/>
 
           <button class="fishing-unequip-item" data-inventory-id="${item.inventory_id}">Unequip</button>
         </div>`;
@@ -336,12 +374,31 @@ export default class Fishing {
         $('.fishing-inventory-list', this.win.content).prepend(itemHtml);
         let formattedValue = this.totalValue.toLocaleString();
         $('.fishing-total-inventory-value', this.win.content).text(formattedValue);
-
       }
+
       if (result.item_def.type === 'fishing-item') {
         let itemHtml = this.renderFishItem(result);
         $('.fishing-items-list', this.win.content).prepend(itemHtml);
       }
+
+      if (result.sold) {
+        // item was auto-sold, we need to remove it from the inventory using a nice fade out effect
+        $('.fishing-results', this.win.content).prepend(`<p>Auto-sold item for ${result.sold.value} coins.</p>`);
+        // get the last item in the fishing-inventory-list and fade it out
+        let lastItem = $('.fishing-inventory-list .fishing-item').first();
+        lastItem.addClass('fishing-item-sold');
+        // add a SOLD label to the item
+        lastItem.prepend('<div class="fishing-item-sold"><h3>SOLD</h3></div>');
+        lastItem.fadeOut(3000, function() {
+          $(this).remove();
+        });
+        // update total value
+        this.totalValue -= result.sold.value;
+        let formattedValue = this.totalValue.toLocaleString();
+        $('.fishing-total-inventory-value', this.win.content).text(formattedValue);
+      }
+
+
 
     } catch (err) {
       console.error('Error during fishing cast:', err);
@@ -349,6 +406,11 @@ export default class Fishing {
         `<span style="color:red;">Error: ${err.message}</span>`
       );
     }
+
+    await this.loadEquipped();
+    await this.loadItems();
+
+
   }
 
   async handleSellAll() {
