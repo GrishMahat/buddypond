@@ -76,12 +76,16 @@
 
 .fishing-inventory {
   background: var(--desktop_element-background);
+  width: 100%;
+  border-radius: 12px;
+  padding: 15px;
 }
 
 .fishing-inventory-list {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  padding: 15px;
 }
 
 #fishing-chart-fish-rarity {
@@ -116,6 +120,10 @@
 }
 
 .fishing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   border: 1px solid #ddd;
   padding: 8px;
   margin-bottom: 8px;
@@ -139,6 +147,16 @@
 
 .fishing-item input[type="checkbox"] {
   margin-right: 5px;
+}
+
+.fishing-button-bar {
+  display: flex;
+  flex-grow: 1;
+  gap: 8px;
+  margin-top: auto;   /* pushes to bottom */
+  justify-content: center;
+  max-height: 36px;
+  padding-top: 10px;
 }
 
 /* disabled give button */

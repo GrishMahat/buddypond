@@ -176,29 +176,31 @@ export default class Fishing {
     this.totalValue += item.value;
     let mutationStr = '';
     if (metadata.mutation) {
-      mutationStr = `<br/>Mutation: ${metadata.mutation} <br/>`;
+      mutationStr = `${metadata.mutation} <br/>`;
     }
-
-
 
     let img = ''; 
     if (metadata.image) {
-      img = `<img class="fishing-item-image" src="${metadata.image}" alt="${item.item_def.name}"/><br/>`;
+      img = `<img class="fishing-item-image" src="${metadata.image}" alt="${item.item_def.name}"/>`;
     }
 
 
     //       Description: ${item.item_def.description}<br/>
+    //       Age: ${caughtTime || 'N/A'}<br/>
+
     /*       Type: ${item.item_def.type}<br/> */
-    return `<div class="fishing-item">
-      <strong>${item.item_def.name}</strong><br/>
-      Age: ${caughtTime || 'N/A'}<br/>
-      Rarity: ${item.item_def.rarity}<br/>
-      Value: ${item.value} coins<br/>
+    return `<div class="fishing-item" title="Caught: ${caughtTime || 'N/A'} - Value: ${item.value} coins">
+      <strong>${item.item_def.name}</strong>
+      ${item.item_def.rarity}<br/>
+      ${item.value} coins<br/>
       ${img}
       ${mutationStr}
-      <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
-      ${favoriteButton}
-      <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
+
+      <div class="fishing-button-bar">
+        <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
+        ${favoriteButton}
+        <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
+      </div>
     </div>`;
   }
 
@@ -237,7 +239,7 @@ export default class Fishing {
         equippedHtml += `<div class="fishing-item">
           <strong>${item.metadata.key}</strong><br/>
           Type: ${item.metadata.key}<br/>
-          Rarity: ${item.metadata.rarity}<br/>
+          ${item.metadata.rarity}<br/>
           <em>${item.metadata.description}</em><br/>
           Durability: ${item.item_durability}<br/>
           ${img}
@@ -318,7 +320,6 @@ export default class Fishing {
                 },
                 reward: result.reward,
               });
-
         }
 
       } else {
@@ -447,12 +448,25 @@ export default class Fishing {
     let result = await this.client.apiRequest('/sell-all', 'POST');
     console.log('Sell all items result:', result);
 
-
     if (result.success) {
       let formattedValue = result.totalValue.toLocaleString();
       let resultsDiv = $('.fishing-results', this.win.content).empty();
       let resultHtml = `<p>Sold ${result.sold_count} items for a total of ${formattedValue} coins.</p>`;
       resultsDiv.prepend(resultHtml);
+
+
+      if (result.totalValue && result.totalValue > 0) {
+        console.log('Emitting reward event for sold item:', result);
+            bp.emit('buddylist-websocket::reward', {
+              success: true,
+              message: {
+                newBalance: result.totalValue, 
+              },
+              reward: result.reward,
+            });
+
+      }
+
 
     }
     if (result.error) {
