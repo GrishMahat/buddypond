@@ -552,14 +552,14 @@ export default {
   },
 
   "fishing": {
-    "icon": 'desktop/assets/images/icons/icon_buddy-frog_64.webp',
+    "icon": 'desktop/assets/images/icons/icon_fishing_64.webp',
     "author": "BuddyPond",
     "label": "Fishing",
     "description": "Catch fish in a virtual pond",
     "onClick": "bp.open('fishing')",
-    "categories": ["creative", "entertainment"],
+    "categories": ["creative", "entertainment", "games"],
     "alias": ["fish"],
-    "enumerable": false, // do not show in the app list
+    "enumerable": true, // do not show in the app list
   },
 
   "casino": {
@@ -587,7 +587,6 @@ export default {
     "alias": ["coinflip"],
     "enumerable": false, // do not show in the app list
   },
-  /*
   'imagegen': {
     "icon": "desktop/assets/images/icons/icon_imagegen_64.webp",
     "label": "ImageGen",
@@ -598,7 +597,6 @@ export default {
     "alias": ["imggen", "image-gen"],
     "enumerable": false, // do not show in the app list
   },
-  */
   'game-doom': {
     "icon": "desktop/assets/images/icons/icon_game-doom_64.webp",
     "label": "Doom",

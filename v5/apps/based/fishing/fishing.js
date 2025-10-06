@@ -86,7 +86,7 @@ export default class Fishing {
     return {
       id: 'fishing',
       title: 'Fishing',
-      icon: 'desktop/assets/images/icons/icon_buddy-frog_64.webp',
+      icon: 'desktop/assets/images/icons/icon_fishing_64.webp',
       position: 'center',
       parent: $('#desktop')[0],
       width: 850,
@@ -361,7 +361,7 @@ export default class Fishing {
       let resultHtml = `<p>You caught a <strong>${result.name}</strong> (Rarity: ${result.rarity})</p>`;
       resultHtml += `<p>Value: ${result.value} coins</p>`;
       if (result.mutation) {
-        resultHtml += `<p>Mutation occurred! You also caught a <strong>${result.mutation}</strong></p>`;
+        resultHtml += `<p>Mutation occurred! Your ${result.name} is <strong>${result.mutation}</strong></p>`;
       }
       resultsDiv.prepend(resultHtml);
 
