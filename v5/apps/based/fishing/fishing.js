@@ -183,20 +183,19 @@ export default class Fishing {
 
     let img = ''; 
     if (metadata.image) {
-      img = `<img src="${metadata.image}" alt="${item.item_def.name}" style="max-width:100px; max-height:100px;"/><br/>`;
+      img = `<img class="fishing-item-image" src="${metadata.image}" alt="${item.item_def.name}"/><br/>`;
     }
 
 
     //       Description: ${item.item_def.description}<br/>
-
+    /*       Type: ${item.item_def.type}<br/> */
     return `<div class="fishing-item">
       <strong>${item.item_def.name}</strong><br/>
-      Type: ${item.item_def.type}<br/>
       Age: ${caughtTime || 'N/A'}<br/>
       Rarity: ${item.item_def.rarity}<br/>
       Value: ${item.value} coins<br/>
-      ${mutationStr}
       ${img}
+      ${mutationStr}
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
@@ -331,8 +330,14 @@ export default class Fishing {
           );
           return;
         }
-
       }
+    });
+
+    // fishing-item-image click to enlarge
+    $('.fishing-app', this.win.content).on('click', '.fishing-item-image', async (e) => {
+      const src = $(e.currentTarget).attr('src');
+      // 🆕 Lightbox click
+      this.bp.apps.ui.showLightBox(src);
     });
 
     // fishing-give-item
