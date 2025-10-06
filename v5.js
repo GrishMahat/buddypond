@@ -1,7 +1,7 @@
 const localIp = window.location.origin;
 const currentPath = window.location.pathname;
 const localToken = localStorage.getItem('qtokenid');
-let devmode = true;
+let devmode = false;
 
 // Endpoint Constants
 const ENDPOINTS = {
@@ -73,7 +73,7 @@ const DEV_ENDPOINTS = {
 
 // Initialize application configuration based on environment
 function configureEnvironment() {
-  // devmode = window.location.hostname !== 'buddypond.com';
+  devmode = window.location.hostname !== 'buddypond.com';
   // devmode = false;
   if (devmode) {
     return DEV_ENDPOINTS
