@@ -8,6 +8,7 @@ export default [
     minWeight: 1,
     maxWeight: 5,
     baseValue: 10,
+    description: "A dull golden-brown freshwater fish with large scales and a rounded body, often found in ponds and lakes.",
   },
   {
     name: "Bluegill",
@@ -17,6 +18,7 @@ export default [
     minWeight: 0.5,
     maxWeight: 2,
     baseValue: 8,
+    description: "A small, round panfish with shimmering blue and green scales and a distinct black spot near its gills.",
   },
   {
     name: "Smallmouth Bass",
@@ -26,6 +28,7 @@ export default [
     minWeight: 1,
     maxWeight: 4,
     baseValue: 12,
+    description: "A bronze-colored freshwater bass with red eyes and a wide mouth, sleek and powerful for its size.",
   },
   {
     name: "Perch",
@@ -35,6 +38,7 @@ export default [
     minWeight: 0.5,
     maxWeight: 1.5,
     baseValue: 9,
+    description: "A small striped freshwater fish with yellow-green scales and spiky dorsal fins.",
   },
 
   // 🐠 Uncommon Fish
@@ -46,6 +50,7 @@ export default [
     minWeight: 2,
     maxWeight: 7,
     baseValue: 25,
+    description: "A sleek silver trout covered in black spots, with a rainbow sheen along its side.",
   },
   {
     name: "Catfish",
@@ -55,6 +60,7 @@ export default [
     minWeight: 3,
     maxWeight: 10,
     baseValue: 30,
+    description: "A whiskered bottom-dwelling fish with smooth gray skin and a wide flat head.",
   },
   {
     name: "Koi",
@@ -64,6 +70,7 @@ export default [
     minWeight: 2,
     maxWeight: 5,
     baseValue: 40,
+    description: "A brightly colored ornamental carp with patterns of orange, white, and black, often seen in ponds.",
   },
   {
     name: "Lionfish",
@@ -73,6 +80,7 @@ export default [
     minWeight: 1,
     maxWeight: 3,
     baseValue: 35,
+    description: "A striking tropical fish with bold red-and-white stripes and long venomous fin spines that fan outward.",
   },
 
   // 🦈 Rare Fish
@@ -84,6 +92,7 @@ export default [
     minWeight: 5,
     maxWeight: 15,
     baseValue: 100,
+    description: "A long, snake-like freshwater eel with smooth dark skin that crackles with electricity.",
   },
   {
     name: "Hammerhead Shark",
@@ -93,6 +102,7 @@ export default [
     minWeight: 20,
     maxWeight: 50,
     baseValue: 200,
+    description: "A massive ocean predator with a wide, hammer-shaped head and piercing black eyes.",
   },
   {
     name: "Giant Squid",
@@ -102,6 +112,7 @@ export default [
     minWeight: 80,
     maxWeight: 150,
     baseValue: 300,
+    description: "A colossal deep-sea squid with enormous tentacles lined with suckers and glowing eyes.",
   },
   {
     name: "Ghost Fish",
@@ -111,6 +122,7 @@ export default [
     minWeight: 1,
     maxWeight: 3,
     baseValue: 500,
+    description: "A translucent, spectral-looking fish that glows faintly in the dark waters.",
   },
 
   // 🧜‍♂️ Legendary Sea Creatures
@@ -122,6 +134,7 @@ export default [
     minWeight: 100,
     maxWeight: 300,
     baseValue: 1000,
+    description: "A titanic sea beast with barnacle-covered scales and a massive serpentine body.",
   },
   {
     name: "Sea Serpent",
@@ -131,6 +144,7 @@ export default [
     minWeight: 120,
     maxWeight: 400,
     baseValue: 1500,
+    description: "A mythic ocean serpent with emerald-green scales and a dragon-like head rising from the waves.",
   },
   {
     name: "Kraken",
@@ -140,6 +154,7 @@ export default [
     minWeight: 200,
     maxWeight: 600,
     baseValue: 2000,
+    description: "A monstrous cephalopod with giant tentacles capable of dragging entire ships into the abyss.",
   },
   {
     name: "Mermaid",
@@ -149,6 +164,7 @@ export default [
     minWeight: 50,
     maxWeight: 100,
     baseValue: 2500,
+    description: "A mystical half-human, half-fish creature with flowing hair, shimmering scales, and a haunting song.",
   },
   {
     name: "Coelacanth",
@@ -158,5 +174,6 @@ export default [
     minWeight: 5,
     maxWeight: 20,
     baseValue: 3000,
+    description: "A rare prehistoric fish with thick blue scales and strange lobed fins, thought extinct for millions of years.",
   }
 ];

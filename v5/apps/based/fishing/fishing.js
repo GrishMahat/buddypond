@@ -114,12 +114,22 @@ export default class Fishing {
       favoriteButton = `<button class="fishing-unfavorite-item" data-inventory-id="${item.id}">❤️</button>`;
     }
 
+    let img = '';
+    let metadata = item.metadata;
+    if (metadata && typeof metadata === 'string') {
+      metadata = JSON.parse(metadata);
+    }
+    if (metadata.image) {
+      img = `<img src="${metadata.image}" alt="${item.item_def.name}" style="max-width:100px; max-height:100px;"/><br/>`;
+    }
+    console.log('Rendering fish item:', item);
     return `<div class="fishing-item">
       <strong>${item.item_def.name}</strong><br/>
       Type: ${item.item_def.type}<br/>
       Rarity: ${item.item_def.rarity}<br/>
       Description: ${item.item_def.description}<br/>
       Durability: ${item.durability || 'N/A'}<br/>
+      ${img}
       <button class="fishing-equip-item" data-inventory-id="${item.id}">Equip</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
@@ -158,9 +168,9 @@ export default class Fishing {
     }
    
     console.log('Rendering fish inventory item:', item);
-    let metadata = {};
-    if (item.metadata && typeof item.metadata === 'string') {
-      metadata = JSON.parse(item.metadata);
+    let metadata = item.metadata;
+    if (metadata && typeof metadata === 'string') {
+      metadata = JSON.parse(metadata);
     }
     item.value = metadata.value || item.value || 0;
     this.totalValue += item.value;
@@ -168,6 +178,14 @@ export default class Fishing {
     if (metadata.mutation) {
       mutationStr = `<br/>Mutation: ${metadata.mutation} <br/>`;
     }
+
+
+
+    let img = ''; 
+    if (metadata.image) {
+      img = `<img src="${metadata.image}" alt="${item.item_def.name}" style="max-width:100px; max-height:100px;"/><br/>`;
+    }
+
 
     //       Description: ${item.item_def.description}<br/>
 
@@ -178,6 +196,7 @@ export default class Fishing {
       Rarity: ${item.item_def.rarity}<br/>
       Value: ${item.value} coins<br/>
       ${mutationStr}
+      ${img}
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
@@ -209,6 +228,12 @@ export default class Fishing {
       this.equippedItems = [];
       equipped.forEach(item => {
         this.equippedItems.push(item.inventory_id);
+
+        let img = ''; 
+        if (item.metadata && item.metadata.image) {
+          img = `<img src="${item.metadata.image}" alt="${item.metadata.name}" style="max-width:100px; max-height:100px;"/><br/>`;
+        }
+
         // TODO: add back durability and charges display
         equippedHtml += `<div class="fishing-item">
           <strong>${item.metadata.key}</strong><br/>
@@ -216,7 +241,7 @@ export default class Fishing {
           Rarity: ${item.metadata.rarity}<br/>
           <em>${item.metadata.description}</em><br/>
           Durability: ${item.item_durability}<br/>
-
+          ${img}
           <button class="fishing-unequip-item" data-inventory-id="${item.inventory_id}">Unequip</button>
         </div>`;
 

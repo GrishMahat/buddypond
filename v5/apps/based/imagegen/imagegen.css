@@ -1,0 +1,24 @@
+.imagegen-image {
+  height: 512px;
+  width: 512px;
+  border: 1px solid #ccc;
+}
+
+.imagegen-image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.imagegen-image-item {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}

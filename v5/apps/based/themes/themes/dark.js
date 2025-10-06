@@ -9,12 +9,6 @@ export default {
             'background': '#231c2f',
             'color': '#E3E3E3'
         },
-        /*
-        'window_main': {
-            'background': '#1a1a1e',
-            'color': '#E3E3E3'
-        },
-        */
         'window_content': {
             'background': '#1a1a1e',
             'color': '#E3E3E3'

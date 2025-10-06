@@ -1,5 +1,8 @@
+import bindUIEvents from './lib/bindUIEvents.js';
 import inventoryClient from './lib/inventoryClient.js';
+import renderInventory from './lib/renderInventory.js';
 
+console.log("bindUIEventsbindUIEventsbindUIEvents", bindUIEvents)
 export default class Inventory {
   // constructor is required, it is called when the app is loaded
   constructor(bp, options = {}) {
@@ -21,9 +24,12 @@ export default class Inventory {
       this.win = await this.bp.window(this.window());
       this.client = inventoryClient;
 
+      this.bindUIEvents();
+
       // get inventory for this user
       this.client.apiRequest('/all', 'GET').then(result => {
         console.log('Inventory result:', result);
+        this.renderInventory(result);
       }).catch(err => {
         console.error('Inventory error:', err);
       });
@@ -70,8 +76,8 @@ export default class Inventory {
       parent: $('#desktop')[0],
       width: 850,
       height: 600,
-      //content: this.html,
-      iframeContent: '/v5/apps/based/inventory/inventory.html',
+      content: this.html,
+      //iframeContent: '/v5/apps/based/inventory/inventory.html',
       resizable: true,
       closable: true,
       onClose: () => {
@@ -80,3 +86,7 @@ export default class Inventory {
     }
   }
 }
+
+Inventory.prototype.bindUIEvents = bindUIEvents;
+// Inventory.prototype.client = inventoryClient;
+Inventory.prototype.renderInventory = renderInventory;

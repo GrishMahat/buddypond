@@ -9,12 +9,6 @@ export default {
             'background': 'linear-gradient(180deg, #666666, #353535)', /* Mac-like gradient */
             'color': '#e0e0e0'
         },
-        /*
-        'window_main': {
-            'background': 'white',
-            'color': '#181818'
-        },
-        */
         'window_content': {
             'background': 'white',
             'color': '#181818'
@@ -76,7 +70,6 @@ export default {
             'text-shadow': 'none'
         },
         'desktop_links': {
-            //  blue
             'color': '#3b82f6',
             'text-decoration': 'none'
         },
