@@ -123,17 +123,19 @@ export default class Fishing {
       img = `<img src="${metadata.image}" alt="${item.item_def.name}" style="max-width:100px; max-height:100px;"/><br/>`;
     }
     console.log('Rendering fish item:', item);
-    return `<div class="fishing-item">
+    return `<div class="fishing-item-items">
       <strong>${item.item_def.name}</strong><br/>
       Type: ${item.item_def.type}<br/>
       Rarity: ${item.item_def.rarity}<br/>
       Description: ${item.item_def.description}<br/>
       Durability: ${item.durability || 'N/A'}<br/>
       ${img}
+      <div class="fishing-items-button-bar">
       <button class="fishing-equip-item" data-inventory-id="${item.id}">Equip</button>
       ${favoriteButton}
       <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
+      </div>
     </div>`;
   }
 
@@ -192,7 +194,7 @@ export default class Fishing {
     return `<div class="fishing-item" title="Caught: ${caughtTime || 'N/A'} - Value: ${item.value} coins">
       <strong>${item.item_def.name}</strong>
       ${item.item_def.rarity}<br/>
-      ${item.value} coins<br/>
+      ${item.value.toLocaleString()} coins<br/>
       ${img}
       ${mutationStr}
 
@@ -232,16 +234,17 @@ export default class Fishing {
 
         let img = ''; 
         if (item.metadata && item.metadata.image) {
-          img = `<img src="${item.metadata.image}" alt="${item.metadata.name}" style="max-width:100px; max-height:100px;"/><br/>`;
+          img = `<img class="fishing-item-image" src="${item.metadata.image}" alt="${item.metadata.name}"/><br/>`;
         }
 
         // TODO: add back durability and charges display
-        equippedHtml += `<div class="fishing-item">
+        //          Type: ${item.metadata.key}<br/>
+
+        equippedHtml += `<div class="fishing-item-equipped">
           <strong>${item.metadata.key}</strong><br/>
-          Type: ${item.metadata.key}<br/>
           ${item.metadata.rarity}<br/>
-          <em>${item.metadata.description}</em><br/>
           Durability: ${item.item_durability}<br/>
+          <em>${item.metadata.description}</em><br/>
           ${img}
           <button class="fishing-unequip-item" data-inventory-id="${item.inventory_id}">Unequip</button>
         </div>`;
@@ -309,6 +312,8 @@ export default class Fishing {
         $(e.currentTarget).closest('.fishing-item').remove();
         // show a message
         let value = result.item.value || 0;
+        // format value
+        value = value.toLocaleString();
         $('.fishing-results', this.win.content).prepend(`<p>Sold item for ${value} coins.</p>`);
 
         if (result.value && result.value > 0) {
