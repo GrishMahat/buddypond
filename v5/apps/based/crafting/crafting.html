@@ -1,0 +1,38 @@
+<div class="hello-world-container">
+  <h1>Crafting Table</h1>
+  <label for="crafting-item-defs">Select Item to Craft:</label>
+  <select id="crafting-item-defs" name="crafting-item-defs" class="crafting-item-defs"></select>
+
+  <!-- choose buddyname to craft item to -->
+  <label for="crafting-target-buddy">Select Buddy to Craft For:</label>
+  <input type="text" id="crafting-target-buddy" name="crafting-target-buddy" class="crafting-target-buddy"></inut>
+
+  <button id="craft-item" class="craft-item">Craft Item</button>
+  <div class="crafting-status"></div>
+
+  <table class="crafting-item-defs-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Type</th>
+        <th>Rarity</th>
+        <th>Attributes</th>
+        <th>Value (BUX)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="crafting-item-defs-list">
+      <!-- Item definitions will be populated here -->
+    </tbody>
+  </table>
+  <!-- item def JSON editor as code-->
+  <div class="crafting-item-def-editor-container">
+    <h2>Edit Item Definition</h2>
+    <button class="cancel-save-item-def">Cancel</button>
+    <button class="save-item-def">Save Item Definition</button>
+    <div class="crafting-item-def-status"></div>
+    <pre><textarea class="crafting-item-def-editor"></textarea></pre>
+  </div>
+
+</div>
+</div>
