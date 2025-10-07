@@ -1,6 +1,3 @@
-// Legacy, removed 10/7/2025
-// Renamed to `inventory-transfer-card.js`
-// This is only required until chat history cycles, all new transfers will use inventory-transfer-card.js
 export default function applyData(el, data, cardClass, parentWindow) {
     const $el = $(el);
 
@@ -24,7 +21,16 @@ export default function applyData(el, data, cardClass, parentWindow) {
 
     // Set the gift card title (e.g., "Gift from [from_player_id] to [to_player_id]")
     const $title = $el.find('.inventory-gift-title');
-    $title.text(`Gift: ${item.key} from ${item.from_player_id} to ${item.to_player_id}`);
+    let headerTransferType = '';
+    if (data.transferType === 'gift') {
+      headerTransferType = 'Gift';
+    }
+    if (data.transferType === 'crafted') {
+      headerTransferType = 'Crafted Item';
+    }
+
+
+    $title.text(`${headerTransferType}: ${item.key} from ${item.from_player_id} to ${item.to_player_id}`);
 
     // Build the details section with all available metadata
     const $details = $el.find('.inventory-gift-details');

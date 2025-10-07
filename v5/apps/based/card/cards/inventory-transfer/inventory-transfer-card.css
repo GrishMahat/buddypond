@@ -1,0 +1,111 @@
+.inventory-gift-card {
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: var(--desktop_element-background, #fff);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-width: 400px; /* Constrain width for better readability */
+}
+
+.inventory-gift-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.inventory-gift-details {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.inventory-gift-details div {
+    margin-bottom: 4px;
+}
+
+.inventory-gift-details strong {
+    margin-right: 8px;
+}
+
+.inventory-gift-image {
+    display: block;
+    max-width: 128px;
+    height: auto;
+    margin-top: 12px;
+    border-radius: 4px;
+    cursor: pointer; /* Indicate clickable for lightbox */
+}
+
+.remix-wrapper {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    z-index: 220;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.remixPaint {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
+    transition: opacity 200ms ease, transform 120ms ease-in-out;
+}
+
+.remixPaint:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.inventory-gift-card:hover .remixPaint {
+    opacity: 1;
+}
+
+.remix-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
+    pointer-events: none;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    background: var(--desktop_element-background, #fff);
+}
+
+.remix-menu.open {
+    transform: scaleX(1);
+    pointer-events: auto;
+}
+
+.remix-option {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remix-option:hover {
+    background: rgba(0, 0, 0, 0.06);
+    transform: scale(1.15);
+    transition: transform 120ms ease-in-out;
+}
+
+.remix-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
