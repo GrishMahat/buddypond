@@ -1,5 +1,6 @@
 import api from './lib/api.js';
 import fishingClient from './lib/fishingClient.js';
+import inventoryClient from '../inventory/lib/inventoryClient.js';
 
 export default class Fishing {
   constructor(bp, options = {}) {
@@ -16,6 +17,8 @@ export default class Fishing {
   async init() {
     this.html = await this.bp.load('/v5/apps/based/fishing/fishing.html');
     await this.bp.load('/v5/apps/based/fishing/fishing.css');
+        this.inventoryClient = inventoryClient;
+
     return 'loaded Fishing';
   }
 
@@ -38,6 +41,10 @@ export default class Fishing {
       this.bindEvents();
     }
 
+
+    // tick once into regen to update stamina display
+    let regenResults = await this.client.apiRequest('/regen', 'GET');
+    console.log('Stamina regen results:', regenResults);
     // get latest /api/fishing/settings player settings
     let playerSettings = await this.client.apiRequest('/settings', 'GET');
     console.log('Player fishing settings:', playerSettings);
@@ -78,6 +85,11 @@ export default class Fishing {
     }
     if (settings.auto_equip_enabled == 'true' || settings.auto_equip_enabled === true) {
       $('#auto-equip-items', this.win.content).prop('checked', settings.auto_equip_enabled);
+    }
+    if (settings.fishing_stamina) {
+      let roundedStamina = Math.round(Number(settings.fishing_stamina));
+      $('.fishing-stamina-value', this.win.content).text(roundedStamina);
+      $('.fishing-stamina-max', this.win.content).text(100); // hardcoded max for now 100
     }
   }
 
@@ -133,7 +145,7 @@ export default class Fishing {
       <div class="fishing-items-button-bar">
       <button class="fishing-equip-item" data-inventory-id="${item.id}">Equip</button>
       ${favoriteButton}
-      <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
+      <button class="fishing-give-item" data-inventory-id="${item.id}">Give</button>
       <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
       </div>
     </div>`;
@@ -157,7 +169,7 @@ export default class Fishing {
       // time between now and caughtTime in time units
       let timeDiff = now - date;
       let timeUnits = Math.floor(timeDiff / 1000 / 60); // convert to minutes
-      
+
       // formate caught time as "X minutes/hours/days ago"
       if (timeUnits < 60) {
         caughtTime = `${timeUnits} minutes ago`;
@@ -165,10 +177,10 @@ export default class Fishing {
         caughtTime = `${Math.floor(timeUnits / 60)} hours ago`;
       } else {
         caughtTime = `${Math.floor(timeUnits / 60 / 24)} days ago`;
-      }      
+      }
 
     }
-   
+
     console.log('Rendering fish inventory item:', item);
     let metadata = item.metadata;
     if (metadata && typeof metadata === 'string') {
@@ -181,11 +193,14 @@ export default class Fishing {
       mutationStr = `${metadata.mutation} <br/>`;
     }
 
-    let img = ''; 
+    let img = '';
     if (metadata.image) {
       img = `<img class="fishing-item-image" src="${metadata.image}" alt="${item.item_def.name}"/>`;
     }
-
+    let itemWeight = '';
+    if (metadata.weight) {
+      itemWeight = `Weight: ${metadata.weight} lbs<br/>`;
+    }
 
     //       Description: ${item.item_def.description}<br/>
     //       Age: ${caughtTime || 'N/A'}<br/>
@@ -194,6 +209,7 @@ export default class Fishing {
     return `<div class="fishing-item" title="Caught: ${caughtTime || 'N/A'} - Value: ${item.value} coins">
       <strong>${item.item_def.name}</strong>
       ${item.item_def.rarity}<br/>
+      ${itemWeight}
       ${item.value.toLocaleString()} coins<br/>
       ${img}
       ${mutationStr}
@@ -201,7 +217,7 @@ export default class Fishing {
       <div class="fishing-button-bar">
         <button class="fishing-sell-item" data-inventory-id="${item.id}">Sell</button>
         ${favoriteButton}
-        <button class="fishing-give-item" disabled="DISABLED" data-inventory-id="${item.id}">Give</button>
+        <button class="fishing-give-item" data-inventory-id="${item.id}">Give</button>
       </div>
     </div>`;
   }
@@ -232,7 +248,7 @@ export default class Fishing {
       equipped.forEach(item => {
         this.equippedItems.push(item.inventory_id);
 
-        let img = ''; 
+        let img = '';
         if (item.metadata && item.metadata.image) {
           img = `<img class="fishing-item-image" src="${item.metadata.image}" alt="${item.metadata.name}"/><br/>`;
         }
@@ -259,7 +275,7 @@ export default class Fishing {
   async loadItems() {
     let items = await this.client.apiRequest('/items', 'GET');
     console.log('Player fishing items:', items);
-    console.log(' this.equippedItems.length',  this.equippedItems);
+    console.log(' this.equippedItems.length', this.equippedItems);
     $('.fishing-items-list', this.win.content).empty();
     items.forEach(item => {
       // check that item.inventory id is not in this.equippedItems
@@ -353,7 +369,9 @@ export default class Fishing {
       const inventoryId = $(e.currentTarget).data('inventory-id');
       let buddyname = prompt('Enter the buddyname of the player to give this item to:');
       if (buddyname) {
-        let result = await this.client.apiRequest('/give', 'POST', { inventory_id: inventoryId, to_buddyname: buddyname });
+        // item_id
+        // const { item_id, to_player_id, quantity } = await c.req.json();
+        let result = await this.inventoryClient.apiRequest('/transfer', 'POST', { item_id: inventoryId, to_player_id: buddyname, quantity: 1, broadcast: true });
         console.log('Give item result:', result);
         if (result.success) {
           // remove the item from the inventory list
@@ -395,10 +413,18 @@ export default class Fishing {
         return;
       }
 
-     $('.fishing-status', this.win.content).html('');
+      // update stamina if provided
+      if (result.stamina) {
+        let roundedStamina = Math.round(Number(result.stamina.fishing_stamina));
+        $('.fishing-stamina-value', this.win.content).text(roundedStamina);
+        $('.fishing-stamina-max', this.win.content).text(100); // hardcoded max for now 100
+
+      }
+
+      $('.fishing-status', this.win.content).html('');
 
       let resultsDiv = $('.fishing-results', this.win.content).empty();
-      let resultHtml = `<p>You caught a <strong>${result.name}</strong> (Rarity: ${result.rarity})</p>`;
+      let resultHtml = `<p>You caught a <strong>${result.name}</strong> (Rarity: ${result.rarity}) Weight: ${result.weight} lbs</p>`;
       resultHtml += `<p>Value: ${result.value} coins</p>`;
       if (result.mutation) {
         resultHtml += `<p>Mutation occurred! Your ${result.name} is <strong>${result.mutation}</strong></p>`;
@@ -429,7 +455,7 @@ export default class Fishing {
         lastItem.addClass('fishing-item-sold');
         // add a SOLD label to the item
         lastItem.prepend('<div class="fishing-item-sold"><h3>SOLD</h3></div>');
-        lastItem.fadeOut(3000, function() {
+        lastItem.fadeOut(3000, function () {
           $(this).remove();
         });
         // update total value

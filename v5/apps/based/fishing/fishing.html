@@ -10,7 +10,7 @@
       <button class="fishing-cast">Cast Your Line!</button>
       <div class="fishing-results"></div>
       <!-- <canvas id="fishing-chart-fish-rarity"></canvas> -->
-      <div class="fishing-inventory">
+      <div class="fishing-inventory ">
         <h3>Fishing Inventory</h3>
         <h4>Value: <span class="fishing-total-inventory-value">0</span></h4>
         <button class="fishing-sell-all">Sell All</button>
@@ -23,7 +23,11 @@
     <!-- Sidebar: Equipped + Items -->
     <aside class="fishing-sidebar">
     <div class="fishing-settings">
-      <h2>Settings</h2>
+      <h2>Player</h2>
+      <!-- stamina display-->
+      <div class="fishing-stamina">
+        Stamina: <span class="fishing-stamina-value">0</span>/<span class="fishing-stamina-max">0</span>
+      </div>
       <label for="auto-sell-fish">Auto-Sell Caught Fish:</label>
       <input type="checkbox" id="auto-sell-fish" name="auto-sell-fish" />
       <label for="auto-equip-items">Auto-Equip Items:</label>
