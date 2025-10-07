@@ -182,7 +182,14 @@ let legacyCommands = {
     description: 'View and Manage your Files',
     icon: 'folder'
   },
- 
+  fishing: {
+    command: function (params) {
+      bp.open('fishing');
+    },
+    description: 'Fishing Game',
+    icon: 'fishing'
+  },
+
   /*
   faq: {
     command: 'desktop.ui.openWindow("faq");',
