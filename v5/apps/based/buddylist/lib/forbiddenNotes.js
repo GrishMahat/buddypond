@@ -8,7 +8,7 @@ let forbiddenNotes = {
 
 forbiddenNotes.randowFunWord = function randowFunWord() {
   let words = ["daffodil", "chrysanthemum", "waffles", "puppies", "senpai", "kohai", "rainbow", "fluffy", "marklar"];
-  // TODO: use bp.random() in order to get seedable randomness
+  // Remark: we could use bp.random() in order to get seedable randomness
   // this will provide consistent results across all client instances
   var item = words[Math.floor(Math.random() * words.length)];
   return item;
@@ -26,6 +26,8 @@ forbiddenNotes.containsBadWord = function (str) {
   });
 };
 
+// TODO: is there a way to perform improved performance here?
+// this method is called on each chat message on initial render
 forbiddenNotes.filter = function (str) {
   forbiddenNotes.decoded.forEach(function (fnote) {
     str = str.replace(new RegExp("\\b" + fnote + "\\b"), forbiddenNotes.randowFunWord())

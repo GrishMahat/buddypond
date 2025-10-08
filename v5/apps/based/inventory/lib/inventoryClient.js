@@ -26,7 +26,7 @@ client.apiRequest = async (uri, method = 'GET', data = null) => {
     options.headers = headers;
 
     let url = `${client.endpoint}${uri}`;
-    console.log('admin client making api request', url, options);
+    console.log('inventoryClient making api request', url, options);
  
 
     try {

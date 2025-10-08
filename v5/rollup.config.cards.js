@@ -176,6 +176,34 @@ export default [
   },
 
   {
+    input: "apps/based/card/cards/inventory-gift/inventory-gift-card.js",
+    output: {
+      file: "dist/apps/based/card/cards/inventory-gift/inventory-gift-card.js",
+      format: "es",
+      sourcemap: true
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser()
+    ]
+  },
+
+  {
+    input: "apps/based/card/cards/inventory-transfer/inventory-transfer-card.js",
+    output: {
+      file: "dist/apps/based/card/cards/inventory-transfer/inventory-transfer-card.js",
+      format: "es",
+      sourcemap: true
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser()
+    ]
+  },
+
+  {
     input: "apps/based/card/cards/markdown/markdown-card.js",
     output: {
       file: "dist/apps/based/card/cards/markdown/markdown-card.js",
@@ -512,6 +540,30 @@ export default [
     },
     plugins: [
       postcss({ extract: path.resolve("dist/apps/based/card/cards/image/image-card.css"), minimize: true, sourceMap: true })
+    ]
+  },
+
+  {
+    input: "apps/based/card/cards/inventory-gift/inventory-gift-card-style.js",
+    output: {
+      file: "dist/dummy-card-css.js",
+      format: "es",
+      sourcemap: false
+    },
+    plugins: [
+      postcss({ extract: path.resolve("dist/apps/based/card/cards/inventory-gift/inventory-gift-card.css"), minimize: true, sourceMap: true })
+    ]
+  },
+
+  {
+    input: "apps/based/card/cards/inventory-transfer/inventory-transfer-card-style.js",
+    output: {
+      file: "dist/dummy-card-css.js",
+      format: "es",
+      sourcemap: false
+    },
+    plugins: [
+      postcss({ extract: path.resolve("dist/apps/based/card/cards/inventory-transfer/inventory-transfer-card.css"), minimize: true, sourceMap: true })
     ]
   },
 

@@ -149,6 +149,13 @@ let legacyCommands = {
     icon: 'lofi'
   },
   */
+  craft: {
+    command: function (params) {
+      bp.open('crafting');
+    },
+    description: 'Crafting Table. Create new items from raw materials',
+    icon: 'crafting'
+  },
   chalkboard: {
     command: function (params, context) {
       bp.open('chalkboard', { context: context.contextName, output: context.windowType });

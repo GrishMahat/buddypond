@@ -119,6 +119,10 @@ export default function createChatMessageElement(message, messageTime, chatWindo
     ? `Anonymous (${message.tripcode || 'tr1pc0d3'})`
     : message.from;
 
+  if (message.displayName) {
+    sender.textContent = message.displayName;
+  }
+
   const timestamp = document.createElement('span');
   timestamp.className = 'aim-timestamp';
   timestamp.textContent = messageTime;

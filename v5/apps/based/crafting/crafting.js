@@ -70,6 +70,7 @@ export default class Crafting {
     let $itemDefTable = $('.crafting-item-defs-table tbody', this.win.content);
 
     $select.empty();
+    $itemDefTable.empty();
     itemDefs.forEach(itemDef => {
       let option = document.createElement('option');
       option.value = itemDef.key;
@@ -126,7 +127,7 @@ export default class Crafting {
     return {
       id: 'crafting',
       title: 'Crafting Table',
-      icon: 'desktop/assets/images/icons/icon_buddy-frog_64.webp',
+      icon: 'desktop/assets/images/icons/icon_crafting_64.webp',
       position: 'center',
       parent: $('#desktop')[0],
       width: 850,

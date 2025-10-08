@@ -622,6 +622,35 @@ export default [
   }
 ,
   {
+    input: 'apps/based/crafting/crafting.js',
+    output: {
+      file: 'dist/apps/based/crafting.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
+    input: 'apps/based/crafting/crafting-style.js',
+    output: {
+      file: 'dist/dummy-css.js',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        extract: path.resolve('dist/apps/based/crafting.css'),
+        minimize: true,
+        sourceMap: true
+      })
+    ]
+  }
+,
+  {
     input: 'apps/based/desktop/desktop.js',
     output: {
       file: 'dist/apps/based/desktop.js',

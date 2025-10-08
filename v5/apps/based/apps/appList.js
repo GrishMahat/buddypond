@@ -20,6 +20,22 @@ export default {
     "onClick": "bp.open('buddylist')",
     "categories": ["social", "community"]
   },
+  "buddybux": {
+    "icon": "desktop/assets/images/icons/icon_buddybux_64.webp",
+    "label": "BuddyBux",
+    "description": "Manage your BuddyBux currency",
+    "onClick": "bp.open('buddybux')",
+    "categories": ["finance", "community"],
+    "enumerable": false
+  },
+  "crafting": {
+    "icon": "desktop/assets/images/icons/icon_crafting_64.webp",
+    "label": "Crafting",
+    "description": "Create and manage crafted items",
+    "onClick": "bp.open('crafting')",
+    "categories": ["creative", "community"],
+    "enumerable": false
+  },
   "pad": {
     "icon": "desktop/assets/images/icons/icon_pad_64.webp",
     "label": "Buddy Apps",
