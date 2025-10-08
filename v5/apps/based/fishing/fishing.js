@@ -161,7 +161,8 @@ export default class Fishing {
     if (typeof item.item_def === 'string') {
       item.item_def = JSON.parse(item.item_def);
     }
-    if (item.item_type !== 'fish' && item.type !== 'fish') { // TODO: unify API response, should always be type?
+    item.item_type = item.item_type || item.type;
+    if (item.item_type !== 'fish') { // TODO: unify API response, should always be type?
       return '';
     }
     let favoriteButton = `<button class="fishing-favorite-item" data-inventory-id="${item.id}">Favorite</button>`;
