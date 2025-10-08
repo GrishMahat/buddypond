@@ -1,6 +1,7 @@
 import bindUIEvents from './lib/bindUIEvents.js';
 import inventoryClient from './lib/inventoryClient.js';
 import renderInventory from './lib/renderInventory.js';
+import sortInventory from './lib/sortInventory.js';
 
 console.log("bindUIEventsbindUIEventsbindUIEvents", bindUIEvents)
 export default class Inventory {
@@ -90,3 +91,4 @@ export default class Inventory {
 Inventory.prototype.bindUIEvents = bindUIEvents;
 // Inventory.prototype.client = inventoryClient;
 Inventory.prototype.renderInventory = renderInventory;
+Inventory.prototype.sortInventory = sortInventory;

@@ -439,6 +439,13 @@ export default function bindUIEvents(app, fishing) {
     if (e.key === 'Escape') { $('#tradeModal').fadeOut(120); }
   });
 
+  $('#sort-inventory').on('change', (ev) => {
+    const sortBy = $(ev.target).val();
+    // Sort inventory items based on selected criteria
+    let sortedItem = this.sortInventory(this.latestItems, sortBy);
+    this.renderInventory(sortedItem);
+  });
+
   // reset demo storage
   $('#clearStorage').on('click', function () {
     if (confirm('Reset demo inventory?')) { localStorage.removeItem(STORAGE_KEY); location.reload(); }

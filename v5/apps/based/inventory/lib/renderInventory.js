@@ -1,5 +1,9 @@
 // UI renderers
 export default function renderInventory(items) {
+
+
+  this.latestItems = items
+  let inventoryTypes = [];
   console.log('Rendering inventory:', items);
   const $grid = $('#inventoryGrid');
   $grid.empty();
@@ -12,8 +16,10 @@ export default function renderInventory(items) {
     if (true || slot.itemId) {
       // const it = state.itemsById[slot.itemId];
       const $item = $(`<div class="item ${itemDef.rarity || ''}" draggable="true" data-item-id="${itemDef.id}" title="${itemDef.name}"></div>`);
-      $item.append(`<div class="icon">${itemDef.icon || '❔'}</div>`);
+      // $item.append(`<div class="icon">${itemDef.icon || '❔'}</div>`);
       $item.append(`<div class="name">${itemDef.name}</div>`);
+      $item.append(`<div class="type">${itemDef.type}</div>`);
+      if (!inventoryTypes.includes(itemDef.type)) inventoryTypes.push(itemDef.type);
 
       if (itemDef.metadata) {
         let metadata = {};
@@ -71,5 +77,35 @@ export default function renderInventory(items) {
     $grid.append($s);
   });
 
+
+  // update the filter-inventory-type select options
+  const $filter = $('#filter-inventory-type');
+  const currentType = $filter.val();
+  $filter.empty();
+  $filter.append('<option value="all">All Types</option>');
+  inventoryTypes.forEach(type => {
+    $filter.append(`<option value="${type}">${type}</option>`);
+  });
+  if (inventoryTypes.includes(currentType)) {
+    $filter.val(currentType);
+  } else {
+    $filter.val('all');
+  }
+  $filter.off('change').on('change', function () {
+    const selectedType = $(this).val();
+    if (selectedType === 'all') {
+      $('.inv-slot .item').parent().show();
+    } else {
+      $('.inv-slot .item').each(function () {
+        const itemType = $(this).find('.type').text();
+        if (itemType === selectedType) {
+          $(this).parent().show();
+        } else {
+          $(this).parent().hide();
+        }
+      });
+    }
+  });
+  $filter.trigger('change');
   // $('#inv-count').text(`${occupiedInventorySlots()} / ${MAX_SLOTS}`);
 }

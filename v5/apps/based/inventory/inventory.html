@@ -1,10 +1,10 @@
 <div class="inventory-app">
-<div class="wrap">
+<div class="inventory-wrap">
   <!-- LEFT: Equipment -->
+   <!--
   <div class="panel char-panel">
     <div class="char-silhouette">⚔️</div>
     <div class="equip-grid">
-      <!-- equipment slots (use data-slot) -->
       <div class="equip-slot empty" data-slot="head" title="Head"><div class="slot-name">Head</div><div class="slot-item"></div></div>
       <div class="equip-slot empty" data-slot="neck" title="Neck"><div class="slot-name">Neck</div><div class="slot-item"></div></div>
       <div class="equip-slot empty" data-slot="shoulder" title="Shoulder"><div class="slot-name">Shoulder</div><div class="slot-item"></div></div>
@@ -21,9 +21,20 @@
       <div class="card muted">Equip items by double-clicking, dragging onto a slot, or selecting an item and pressing <strong>E</strong>.</div>
     </div>
   </div>
-
+  -->
   <!-- CENTER: Inventory -->
   <div class="panel inventory-panel">
+    <select id="filter-inventory-type">
+      <option value="all">All Types</option>
+      <!-- JS fills types -->
+    </select>
+        <select id="sort-inventory">
+        <option value="rarity">Rarity</option>
+        <option value="name">Name</option>
+        <option value="type">Type</option>
+      <!-- JS fills types -->
+    </select>
+
     <div class="inventory-header">
       <div class="inventory-title">Backpack</div>
       <div class="muted" id="inv-count">0 / 0</div>
@@ -31,13 +42,16 @@
 
     <div class="inventory-grid" id="inventoryGrid"></div>
 
+    <!--
     <div class="card muted" style="display:flex;justify-content:space-between;align-items:center;">
       <div>Drag items onto equipment slots to equip. Right panel shows details & actions.</div>
       <div><button class="btn ghost" id="clearStorage">Reset</button></div>
     </div>
+    -->
   </div>
 
   <!-- RIGHT: Details & actions -->
+   <!--
   <div class="panel details">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -70,6 +84,7 @@
     </div>
   </div>
 </div>
+-->
 
 <!-- Trade modal -->
 <div class="modal" id="tradeModal">
