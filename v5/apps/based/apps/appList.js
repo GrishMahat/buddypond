@@ -611,7 +611,7 @@ export default {
     "categories": ["art", "creative", "ai"],
     "author": "BuddyPond",
     "alias": ["imggen", "image-gen"],
-    "enumerable": false, // do not show in the app list
+    adminOnly: true
   },
   'game-doom': {
     "icon": "desktop/assets/images/icons/icon_game-doom_64.webp",

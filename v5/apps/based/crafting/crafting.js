@@ -88,6 +88,8 @@ export default class Crafting {
       `);
     });
 
+    makeTableSortable('.crafting-item-defs-table');
+
     $('.craft-item', this.win.content).on('click', async (e) => {
       let selectedKey = $select.val();
       let targetBuddy = $('.crafting-target-buddy', this.win.content).val();
@@ -171,4 +173,42 @@ export default class Crafting {
   */
 
 
+}
+
+// TODO: move this into a generic `<bp-table>` web component
+// TODO: multi-sort columns with click
+function makeTableSortable(tableSelector) {
+  const $table = $(tableSelector);
+
+  $table.find('th').each(function (colIndex) {
+    $(this).css('cursor', 'pointer').on('click', function () {
+      const $tbody = $table.find('tbody');
+      const rows = $tbody.find('tr').get();
+      const ascending = !$(this).data('asc'); // toggle direction
+
+      // Remove sort arrows from other headers
+      $table.find('th').not(this).data('asc', null).removeClass('sort-asc sort-desc');
+
+      // Sort rows based on text content
+      rows.sort((a, b) => {
+        const aText = $(a).children('td').eq(colIndex).text().trim().toLowerCase();
+        const bText = $(b).children('td').eq(colIndex).text().trim().toLowerCase();
+
+        const aNum = parseFloat(aText);
+        const bNum = parseFloat(bText);
+        const bothNumeric = !isNaN(aNum) && !isNaN(bNum);
+
+        if (bothNumeric) {
+          return ascending ? aNum - bNum : bNum - aNum;
+        }
+        return ascending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+      });
+
+      // Reinsert sorted rows
+      $.each(rows, (_, row) => $tbody.append(row));
+
+      // Toggle and mark sorted column
+      $(this).data('asc', ascending).toggleClass('sort-asc', ascending).toggleClass('sort-desc', !ascending);
+    });
+  });
 }

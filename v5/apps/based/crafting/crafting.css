@@ -1,25 +1,118 @@
-.hello-world-container {
-  padding: 20px;
-  background-color: #2c3e50;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  min-width: 300px;
-  min-height: 150px;
+.crafting-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  margin: 0 auto;
 }
 
-.hello-world-container > h1 {
+.crafting-container > h1 {
   text-align: center;
-  color: #ffefc2;
-  text-shadow: 1px 1px 3px #000;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--text-accent, #ffefc2);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.crafting-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.crafting-field {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.crafting-field label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.crafting-field select,
+.crafting-field input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.05);
+  color: inherit;
+}
+
+.crafting-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.craft-item {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.craft-item:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.crafting-status {
+  flex: 1;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.crafting-item-defs-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.crafting-item-defs-table th,
+.crafting-item-defs-table td {
+  text-align: left;
+}
+
+.crafting-item-defs-table thead {
+  font-weight: bold;
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+}
+
+.crafting-item-defs-table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.04);
 }
 
 .crafting-item-def-editor-container {
   display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.crafting-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .crafting-item-def-editor {
-  white-space: pre-wrap;
-  word-wrap: break-word;
   width: 100%;
-  height: 800px;
+  height: 600px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-family: monospace;
+  resize: vertical;
+  background: rgba(255,255,255,0.05);
+  color: inherit;
 }
