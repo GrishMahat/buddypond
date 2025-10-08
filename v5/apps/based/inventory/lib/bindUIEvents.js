@@ -8,6 +8,7 @@ const MAX_SLOTS = 20;
 const STORAGE_KEY = 'demo_inventory_v1';
 
 const sampleItems = [
+  /*
   { id: 'sword_bronze', name: 'Bronze Sword', type: 'weapon', slot: 'mainhand', qty: 1, rarity: 'rare', icon: '🗡️', description: 'A trusty bronze blade.', stats: { atk: 6 } },
   { id: 'shield_wood', name: 'Wooden Shield', type: 'armor', slot: 'offhand', qty: 1, rarity: 'common', icon: '🛡️', description: 'Light shield provides small protection.', stats: { def: 3 } },
   { id: 'helm_iron', name: 'Iron Helm', type: 'armor', slot: 'head', qty: 1, rarity: 'rare', icon: '🥽', description: 'Sturdy iron helmet.', stats: { def: 4 } },
@@ -16,6 +17,7 @@ const sampleItems = [
   { id: 'gold_coin', name: 'Gold Coin', type: 'currency', qty: 128, rarity: 'common', icon: '🪙', description: 'Currency; trade for goods.' },
   { id: 'ring_of_power', name: 'Ring of Might', type: 'ring', slot: 'ring1', qty: 1, rarity: 'epic', icon: '💍', description: 'A small ring imbued with strength.', stats: { atk: 3, str: +2 } },
   { id: 'mystic_scroll', name: 'Scroll of Recall', type: 'misc', qty: 1, rarity: 'rare', icon: '📜', description: 'Return to town when read.' },
+   */
 ];
 
 let state = {
@@ -120,7 +122,7 @@ function renderInventory() {
     $grid.append($s);
   });
 
-  $('#inv-count').text(`${occupiedInventorySlots()} / ${MAX_SLOTS}`);
+  // $('#inv-count').text(`${occupiedInventorySlots()} / ${MAX_SLOTS}`);
 }
 
 function renderEquipment() {
@@ -158,7 +160,9 @@ function renderEquipment() {
 
 // helpers
 function occupiedInventorySlots() {
-  return state.inventory.filter(s => s.itemId).length;
+  console.log('occupiedInventorySlots', this)
+  return this.latestItems.length;
+  // return state.inventory.filter(s => s.itemId).length;
 }
 
 function isEquipable(item) {
@@ -442,7 +446,20 @@ export default function bindUIEvents(app, fishing) {
   $('#sort-inventory').on('change', (ev) => {
     const sortBy = $(ev.target).val();
     // Sort inventory items based on selected criteria
-    let sortedItem = this.sortInventory(this.latestItems, sortBy);
+    let sortDirection = $('#sort-direction').data('direction') || 'asc';
+    let sortedItem = this.sortInventory(this.latestItems, sortBy, sortDirection);
+    this.renderInventory(sortedItem);
+  });
+
+  $('.sort-direction').on('click', (ev) => {
+    let currentDirection = $(ev.target).data('direction') || 'asc';
+    let newDirection = currentDirection === 'asc' ? 'desc' : 'asc';
+    $(ev.target).data('direction', newDirection);
+    $(ev.target).text(newDirection === 'asc' ? '⬆️' : '⬇️');
+    // $(this).html('ooo');
+    const sortBy = $('#sort-inventory').val();
+    // alert('Sorting ' + sortBy + ' ' + newDirection);
+    let sortedItem = this.sortInventory(this.latestItems, sortBy, newDirection);
     this.renderInventory(sortedItem);
   });
 

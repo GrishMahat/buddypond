@@ -1,7 +1,7 @@
 <div class="inventory-app">
-<div class="inventory-wrap">
-  <!-- LEFT: Equipment -->
-   <!--
+  <div class="inventory-wrap">
+    <!-- LEFT: Equipment -->
+    <!--
   <div class="panel char-panel">
     <div class="char-silhouette">⚔️</div>
     <div class="equip-grid">
@@ -22,36 +22,42 @@
     </div>
   </div>
   -->
-  <!-- CENTER: Inventory -->
-  <div class="panel inventory-panel">
-    <select id="filter-inventory-type">
-      <option value="all">All Types</option>
-      <!-- JS fills types -->
-    </select>
+    <!-- CENTER: Inventory -->
+    <div class="panel inventory-panel">
+      <div class="inventory-filters">
+        <label for="filter-inventory-type">Filter by Type:</label>
+        <select id="filter-inventory-type">
+          <option value="all">All Types</option>
+          <!-- JS fills types -->
+        </select>
+        <label for="sort-inventory">Sort by:</label>
         <select id="sort-inventory">
-        <option value="rarity">Rarity</option>
-        <option value="name">Name</option>
-        <option value="type">Type</option>
-      <!-- JS fills types -->
-    </select>
+          <option value="rarity">Rarity</option>
+          <option value="name">Name</option>
+          <option value="type">Type</option>
+          <!-- JS fills types -->
+        </select>
+        <!-- sort direction arrow -->
+        <button id="sort-direction" data-direction="asc" class="sort-direction" title="Toggle Sort Direction">⬆️</button>
+        <div class="muted" id="inv-count">0 / 0</div>
+      </div>
 
-    <div class="inventory-header">
-      <div class="inventory-title">Backpack</div>
-      <div class="muted" id="inv-count">0 / 0</div>
-    </div>
+      <div class="inventory-header">
+        <!-- <div class="inventory-title">Backpack</div> -->
+      </div>
 
-    <div class="inventory-grid" id="inventoryGrid"></div>
+      <div class="inventory-grid" id="inventoryGrid"></div>
 
-    <!--
+      <!--
     <div class="card muted" style="display:flex;justify-content:space-between;align-items:center;">
       <div>Drag items onto equipment slots to equip. Right panel shows details & actions.</div>
       <div><button class="btn ghost" id="clearStorage">Reset</button></div>
     </div>
     -->
-  </div>
+    </div>
 
-  <!-- RIGHT: Details & actions -->
-   <!--
+    <!-- RIGHT: Details & actions -->
+    <!--
   <div class="panel details">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -86,20 +92,19 @@
 </div>
 -->
 
-<!-- Trade modal -->
-<div class="modal" id="tradeModal">
-  <div class="box">
-    <div style="font-weight:700">Trade Item</div>
-    <div class="muted" id="tradeItemTitle">—</div>
-    <div class="form-row">
-      <input type="text" id="tradeTarget" placeholder="Player name or ID" />
-      <input type="number" id="tradeQty" min="1" placeholder="Qty" />
-    </div>
-    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
-      <button class="btn ghost" id="tradeCancel">Cancel</button>
-      <button class="btn" id="tradeConfirm">Send</button>
+    <!-- Trade modal -->
+    <div class="modal" id="tradeModal">
+      <div class="box">
+        <div style="font-weight:700">Trade Item</div>
+        <div class="muted" id="tradeItemTitle">—</div>
+        <div class="form-row">
+          <input type="text" id="tradeTarget" placeholder="Player name or ID" />
+          <input type="number" id="tradeQty" min="1" placeholder="Qty" />
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+          <button class="btn ghost" id="tradeCancel">Cancel</button>
+          <button class="btn" id="tradeConfirm">Send</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
-

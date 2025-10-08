@@ -82,6 +82,9 @@
 .crafting-item-defs-table th,
 .crafting-item-defs-table td {
   text-align: left;
+  padding-right: 6px;
+  padding-top: 6px;
+
 }
 
 .crafting-item-defs-table thead {
@@ -92,6 +95,12 @@
 .crafting-item-defs-table tbody tr:nth-child(even) {
   background: rgba(255,255,255,0.04);
 }
+
+.crafting-item-defs-table tbody tr:hover {
+  background: rgba(255,255,255,0.1);
+  /* cursor: pointer; */
+}
+
 
 .crafting-item-def-editor-container {
   display: none;
@@ -115,4 +124,16 @@
   resize: vertical;
   background: rgba(255,255,255,0.05);
   color: inherit;
+}
+
+th.sort-asc::after {
+  content: " ▲";
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+
+th.sort-desc::after {
+  content: " ▼";
+  font-size: 0.8em;
+  opacity: 0.6; 
 }

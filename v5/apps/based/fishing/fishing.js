@@ -120,7 +120,12 @@ export default class Fishing {
     if (typeof item.item_def === 'string') {
       item.item_def = JSON.parse(item.item_def);
     }
-
+    console.log('renderFishItem item:', item);
+    if (item.item_type === 'fish') {
+      // console.warn('renderFishItem called with non-fish item:', item);
+      return '';
+    }
+    
     let favoriteButton = `<button class="fishing-favorite-item" data-inventory-id="${item.id}">Favorite</button>`;
     if (item.favorited === 1) {
       favoriteButton = `<button class="fishing-unfavorite-item" data-inventory-id="${item.id}">❤️</button>`;
@@ -152,8 +157,12 @@ export default class Fishing {
   }
 
   renderFishInventoryItem(item) {
+    console.log('Rendering fish inventory item:', item);
     if (typeof item.item_def === 'string') {
       item.item_def = JSON.parse(item.item_def);
+    }
+    if (item.item_type !== 'fish' && item.type !== 'fish') { // TODO: unify API response, should always be type?
+      return '';
     }
     let favoriteButton = `<button class="fishing-favorite-item" data-inventory-id="${item.id}">Favorite</button>`;
     if (item.favorited === 1) {

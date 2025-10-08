@@ -28,6 +28,19 @@ export default class Crafting {
         // Remark: If we update an itemDef, we'd have to iterate all inventory for all players to update
         // their existing inventory?
         // first version can just update itemDef, not globablly
+        let updateJSONString = $('.crafting-item-def-editor', this.win.content).val();
+        let update = JSON.parse(updateJSONString);
+
+        try {
+          let updateResponse = await this.updateItemDef(update.key, update);
+          console.log('updateResponse', updateResponse);
+          if (updateResponse.error) {
+            throw new Error(updateResponse.error);
+          }
+        } catch (error) {
+          alert('Error updating item definition: ' + error.message);
+          return;
+        }
         this.bp.open('crafting')
       });
 
@@ -36,6 +49,41 @@ export default class Crafting {
         // reload the page
         this.bp.open('crafting')
       });
+
+
+      $('.craft-item', this.win.content).on('click', async (e) => {
+        let selectedKey = $select.val();
+        let targetBuddy = $('.crafting-target-buddy', this.win.content).val();
+        console.log('Craft item clicked', selectedKey);
+
+        if (!selectedKey) {
+          alert('Please select an item to craft');
+          return;
+        }
+        if (!targetBuddy) {
+          alert('Please enter a buddy username to send the crafted item to');
+          return;
+        }
+        let craftingResult = await this.inventoryClient.apiRequest('/craft', 'POST', { key: selectedKey, quantity: 1, targetBuddy }, this.bp);
+        console.log('Crafting result', craftingResult);
+        if (craftingResult.error) {
+          alert('Error crafting item: ' + craftingResult.error);
+        } else {
+          alert(`Successfully crafted ${craftingResult.quantity} x ${craftingResult.name} and sent to ${targetBuddy}`);
+        }
+        /*
+        let result = await this.inventoryClient.apiRequest('/craft', 'POST', { uuid: selectedUuid, quantity: 1 }, this.bp);
+        console.log('Craft result', result);
+        if (result.error) {
+          alert('Error crafting item: ' + result.error);
+        } else {
+          alert(`Successfully crafted ${result.quantity} x ${result.name}`);
+        }
+        */
+      });
+
+
+
     }
 
     if (options.context && options.context !== 'default') {
@@ -60,8 +108,8 @@ export default class Crafting {
       $('.crafting-item-def-editor', this.win.content).html(JSON.stringify(itemDef, null, 2));
       return;
     }
-      $('.crafting-item-defs-table', this.win.content).show();
-      $('.crafting-item-def-editor-container', this.win.content).hide();
+    $('.crafting-item-defs-table', this.win.content).show();
+    $('.crafting-item-def-editor-container', this.win.content).hide();
 
     // fetch all item definitions
     let itemDefs = await this.inventoryClient.apiRequest('/defs', 'GET', null, this.bp);
@@ -89,37 +137,6 @@ export default class Crafting {
     });
 
     makeTableSortable('.crafting-item-defs-table');
-
-    $('.craft-item', this.win.content).on('click', async (e) => {
-      let selectedKey = $select.val();
-      let targetBuddy = $('.crafting-target-buddy', this.win.content).val();
-      console.log('Craft item clicked', selectedKey);
-
-      if (!selectedKey) {
-        alert('Please select an item to craft');
-        return;
-      }
-      if (!targetBuddy) {
-        alert('Please enter a buddy username to send the crafted item to');
-        return;
-      }
-      let craftingResult = await this.inventoryClient.apiRequest('/craft', 'POST', { key: selectedKey, quantity: 1, targetBuddy }, this.bp);
-      console.log('Crafting result', craftingResult);
-      if (craftingResult.error) {
-        alert('Error crafting item: ' + craftingResult.error);
-      } else {
-        alert(`Successfully crafted ${craftingResult.quantity} x ${craftingResult.name} and sent to ${targetBuddy}`);
-      }
-      /*
-      let result = await this.inventoryClient.apiRequest('/craft', 'POST', { uuid: selectedUuid, quantity: 1 }, this.bp);
-      console.log('Craft result', result);
-      if (result.error) {
-        alert('Error crafting item: ' + result.error);
-      } else {
-        alert(`Successfully crafted ${result.quantity} x ${result.name}`);
-      }
-      */
-    });
 
     return this.win;
   }
@@ -211,4 +228,16 @@ function makeTableSortable(tableSelector) {
       $(this).data('asc', ascending).toggleClass('sort-asc', ascending).toggleClass('sort-desc', !ascending);
     });
   });
+}
+
+
+Crafting.prototype.updateItemDef = async function (item_key, update) {
+  console.log('Updating item def', item_key, update);
+  let _update = {
+    metadata: update.metadata
+  };
+  console.log('Updating item def', item_key, _update);
+  let updateResponse = await this.inventoryClient.apiRequest(`/defs/${item_key}`, 'PATCH', _update)
+  return updateResponse;
+
 }

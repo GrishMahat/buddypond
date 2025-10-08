@@ -33,8 +33,7 @@ export default {
     "label": "Crafting",
     "description": "Create and manage crafted items",
     "onClick": "bp.open('crafting')",
-    "categories": ["creative", "community"],
-    "enumerable": false
+    "categories": ["creative", "community"]
   },
   "pad": {
     "icon": "desktop/assets/images/icons/icon_pad_64.webp",
@@ -588,9 +587,7 @@ export default {
     "authorUrl": "https://github.com/BuddyPond",
     "alias": ["casino"],
     "enumerable": false, // do not show in the app list
-
   },
-
   "casino-coinflip": {
     "icon": "desktop/assets/images/icons/icon_coinflip_64.webp",
     "label": "Coin Flip",
@@ -630,7 +627,6 @@ export default {
     "categories": ["tools", "productivity"],
     "author": "BuddyPond",
     "alias": ["items", "gear"],
-    "enumerable": false, // do not show in the app list
   },
   'inventory-admin': {
     "icon": "desktop/assets/images/icons/icon_inventory-admin_64.webp",

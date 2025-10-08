@@ -1,12 +1,20 @@
+let MAX_SLOTS = 999;
+
 // UI renderers
 export default function renderInventory(items) {
-
 
   this.latestItems = items
   let inventoryTypes = [];
   console.log('Rendering inventory:', items);
   const $grid = $('#inventoryGrid');
   $grid.empty();
+
+  if (items.length === 0) {
+    // add a go fishing call to action
+    $grid.append('<div class="empty-inventory">Your inventory is empty. Go find some items!<button class="btn primary open-app" data-app="fishing" id="go-fishing">Go Fishing</button></div>');
+    return;
+  }
+
   items.forEach(slot => {
     const $s = $('<div class="inv-slot"></div>');
     console.log('Rendering slot:', slot);
@@ -75,6 +83,10 @@ export default function renderInventory(items) {
     });
 
     $grid.append($s);
+
+    $('#inv-count').text(`${this.latestItems.length} / ${MAX_SLOTS}`);
+
+
   });
 
 
