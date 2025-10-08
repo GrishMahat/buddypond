@@ -156,6 +156,13 @@ let legacyCommands = {
     description: 'Crafting Table. Create new items from raw materials',
     icon: 'crafting'
   },
+  inventory : {
+    command: function (params) {
+      bp.open('inventory');
+    },
+    description: 'View and Manage your Inventory',
+    icon: 'inventory'
+  },
   chalkboard: {
     command: function (params, context) {
       bp.open('chalkboard', { context: context.contextName, output: context.windowType });

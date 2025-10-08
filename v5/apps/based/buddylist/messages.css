@@ -398,6 +398,14 @@
     /* ~2px */
 }
 
+.aim-message-flair span {
+  cursor: pointer;
+}
+
+.aim-message-flair span:hover {
+  transform: scale(1.2);
+}
+
 .aim-sender {
     font-weight: 600;
     font-size: 0.875rem;

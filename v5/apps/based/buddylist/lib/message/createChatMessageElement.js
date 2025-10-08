@@ -113,6 +113,37 @@ export default function createChatMessageElement(message, messageTime, chatWindo
   const messageHeader = document.createElement('div');
   messageHeader.className = 'aim-message-header';
 
+  // Message flair
+  const messageFlair = document.createElement('span');
+  messageFlair.className = 'aim-message-flair';
+
+  if (message.flair) {
+    // for each flair, render an emoji span
+    message.flair.forEach(flair => {
+      const flairSpan = document.createElement('span');
+      flairSpan.className = 'aim-message-flair-item';
+      if (flair.emoji) {
+        flairSpan.textContent = flair.emoji;
+      } else {
+        flairSpan.textContent = flair.key;
+      }
+
+      // set title attribute to flair key
+    flairSpan.setAttribute('title', flair.description);
+      // clicking on flair should bp.open('inventory');
+      flairSpan.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // TODO: should buddy open profile
+        this.bp.open('user-profile', { context: message.from });
+        // this.bp.open('inventory');
+      });
+
+      messageFlair.appendChild(flairSpan);
+    });
+    // messageFlair.textContent = message.flair;
+  }
+
   const sender = document.createElement('span');
   sender.className = 'aim-sender';
   sender.textContent = message.from === 'anonymous'
@@ -120,6 +151,9 @@ export default function createChatMessageElement(message, messageTime, chatWindo
     : message.from;
 
   if (message.displayName) {
+    // TODO: check if display name is different from past display name
+    // if so, bp.emit('buddylist::displayNameChanged', { buddyname: message.from, displayName: message.displayName });
+    // All other interfaces can listen for this event and update accordingly
     sender.textContent = message.displayName;
   }
 
@@ -216,6 +250,7 @@ export default function createChatMessageElement(message, messageTime, chatWindo
 
   // Assemble message
   contentWrapper.appendChild(messageHeader);
+  contentWrapper.appendChild(messageFlair);
   if (replyIndicator) {
     contentWrapper.appendChild(replyIndicator);
   }
