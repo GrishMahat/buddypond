@@ -122,6 +122,7 @@ export default function registerEventHandlers() {
     // Remark: buddy-out sound disabled until new client connection logic with backend is fully tested 
     //         ( was triggering too many sounds too often )
     //this.bp.on('profile::buddy::out', 'play-buddy-out-sound', data => bp.play('desktop/assets/audio/BUDDY-OUT.wav'));
+    // TODO: this is actually buddy::notification::message
     this.bp.on('buddy::message::processed', 'play-im-sound', data => {
         if (data.noAlert) {
             // don't play sound if noAlert is set by server

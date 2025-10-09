@@ -1,6 +1,17 @@
 import forbiddenNotes from '../forbiddenNotes.js';
 import checkForLinksInMessage from './checkForLinksInMessage.js';
 
+
+function checkMessageForMentions(message) {
+    // Check if message contains a mention of the current user
+    // should check for @username
+    if (message.text && this.bp.me) {
+        const mentionRegex = new RegExp(`@${this.bp.me}\\b`, 'i');
+        return mentionRegex.test(message.text);
+    }
+    return false;
+}
+
 export default async function renderChatMessage(message, _chatWindow) {
     // console.log('renderChatMessage', message, _chatWindow);
     // console.log('renderChatMessage', message, _chatWindow);
@@ -12,6 +23,32 @@ export default async function renderChatMessage(message, _chatWindow) {
       message.text = forbiddenNotes.filter(message.text);
     }
     */
+  
+    // check for replies
+    if (message.replyto) {
+      // console.log('REPLYTO', message);
+
+      // lookup the message by message.replyTo UUID
+      let replyMessageEl = $(`.aim-chat-message[data-uuid="${message.replyto}"]`);
+      if (replyMessageEl.length > 0) {
+        // check if data attribe from matches this.bp.me
+        let replyFrom = replyMessageEl.attr('data-from');
+        if (replyFrom && replyFrom === this.bp.me) {
+          // we replied to ourselves
+          console.log('someone replied to our message');
+          this.bp.emit('buddy::message::processed', message);
+
+        } else {
+          // we replied to someone else
+          console.log('should not happen someone replied to someone else');
+        }
+      }
+    }
+
+    if (checkMessageForMentions.call(this, message)) {
+      // play notification sound for mentions
+      this.bp.emit('buddy::message::processed', message);
+    }
 
     // TODO: needs to check for links inside the message, not just entire links
     checkForLinksInMessage(message);

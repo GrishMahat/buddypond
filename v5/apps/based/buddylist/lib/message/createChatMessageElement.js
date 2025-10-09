@@ -59,10 +59,14 @@ function createHoverMenu(message) {
 }
 
 export default function createChatMessageElement(message, messageTime, chatWindow, cardContainer) {
+  // console.log('createChatMessageElement', message, messageTime, chatWindow, cardContainer);
   // Create main message container
   const chatMessage = document.createElement('div');
   chatMessage.className = 'aim-chat-message';
-  chatMessage.setAttribute('data-id', message.id);
+  // is this even used? do we need the -id? is it useed for sorting?
+  if (message.id) {
+      chatMessage.setAttribute('data-id', message.id);
+  }
   chatMessage.setAttribute('data-from', message.from);
   chatMessage.setAttribute('data-to', message.to);
   chatMessage.setAttribute('data-type', message.type);
