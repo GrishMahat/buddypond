@@ -20,20 +20,44 @@ export default class Inventory {
     return 'loaded Inventory';
   }
 
-  async open() {
+  async open({ context } = {}) {
     if (!this.win) {
       this.win = await this.bp.window(this.window());
       this.client = inventoryClient;
 
       this.bindUIEvents();
 
+      // may be for other user.
+      let buddynameInventory = this.bp.me;
+      if (context && context !== 'default') {
+        buddynameInventory = context;
+      }
       // get inventory for this user
-      this.client.apiRequest('/all', 'GET').then(result => {
+      this.client.apiRequest(`/all/${buddynameInventory}`, 'GET').then(result => {
         console.log('Inventory result:', result);
         this.renderInventory(result);
       }).catch(err => {
         console.error('Inventory error:', err);
       });
+
+      // TODO: make a web comonent bp-avatar
+      // Profile picture (SVG)
+      const profilePicture = document.createElement('div');
+      //profilePicture.className = 'aim-profile-picture';
+      let me = this.bp.me;
+      if (this.bp.apps.buddylist.data.profileState.profilePicture) {
+        // use url as profile picture src
+        const img = document.createElement('img');
+        img.src = this.bp.apps.buddylist.data.profileState.profilePicture;
+        img.alt = `${me}'s avatar`;
+        //img.className = 'aim-chat-message-profile-picture-img';
+        profilePicture.appendChild(img);
+      } else {
+        const defaultAvatar = this.bp.apps.buddylist.defaultAvatarSvg(me);
+        profilePicture.innerHTML = defaultAvatar;
+      }
+          
+      $('.char-silhouette', this.win.content).append(profilePicture);
     }
     return this.win;
   }

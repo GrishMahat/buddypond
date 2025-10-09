@@ -84,9 +84,10 @@ export default function bindMessageContextMenu() {
       cancelReply.call(this, replyBox);
       return;
     }
-
+    console.log('click event not handled by message context menu'); 
     // Close existing context menu and reset hover menu
     closeMenus.call(this);
+    return true;
   });
 }
 

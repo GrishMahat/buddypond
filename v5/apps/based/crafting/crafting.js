@@ -50,6 +50,14 @@ export default class Crafting {
         this.bp.open('crafting')
       });
 
+      $('.craft-view-buddy-inventory', this.win.content).on('click', async (e) => {
+        let targetBuddy = $('.crafting-target-buddy', this.win.content).val();
+        if (!targetBuddy) {
+          alert('Please enter a buddy username to view their inventory');
+          return;
+        }
+        this.bp.open('inventory', { context: targetBuddy });
+      });
 
       $('.craft-item', this.win.content).on('click', async (e) => {
         let selectedKey = $select.val();
