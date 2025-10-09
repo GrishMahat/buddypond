@@ -44,7 +44,16 @@ function updatePondConnectedUsers(data) {
     });
 
     // Update or add user items
-    (data.users || []).forEach((user) => {
+    let _users = data.users || [];
+    // sort by buddyname
+    // console.log('_users before sort', _users);
+    _users.sort((a, b) => {
+        let nameA = a.userId ? a.userId.toLowerCase() : "";
+        let nameB = b.userId ? b.userId.toLowerCase() : "";
+        return nameA.localeCompare(nameB);
+    });
+
+    _users.forEach((user) => {
         let { userId, profilePicture } = user;
         userId = userId ? userId.toString() : null;
         if (!userId || typeof userId !== "string") {
@@ -110,6 +119,7 @@ function updatePondConnectedUsers(data) {
 
 // Creates a profile picture element for a user
 // Returns null if no update is needed for existing users
+// TODO: should be <bp-avatar> component
 function createProfilePictureElement(userId, profilePicture, $existingContainer = null) {
     const $profilePicture = $("<div>", { class: "aim-profile-picture" });
 
@@ -461,6 +471,8 @@ function toggleMessagesContainer(contextName, chatWindow) {
 
     // Hide all message containers and user lists
     $(".aim-messages-container", chatArea).hide();
+
+    // TODO: Refactor .aim-user-list to be a separate function populateUserList(contextName, chatWindow)
     $(".aim-user-list", userListArea).hide();
 
     // Normalize context for user list (e.g., "pond/general" -> "general")
