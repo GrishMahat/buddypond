@@ -65,7 +65,7 @@ export default function createChatMessageElement(message, messageTime, chatWindo
   chatMessage.className = 'aim-chat-message';
   // is this even used? do we need the -id? is it useed for sorting?
   if (message.id) {
-      chatMessage.setAttribute('data-id', message.id);
+    chatMessage.setAttribute('data-id', message.id);
   }
   chatMessage.setAttribute('data-from', message.from);
   chatMessage.setAttribute('data-to', message.to);
@@ -121,6 +121,11 @@ export default function createChatMessageElement(message, messageTime, chatWindo
   const messageFlair = document.createElement('span');
   messageFlair.className = 'aim-message-flair';
 
+  // youtube-subscriber-badge
+  message.flair = message.flair ||[];
+  // message.flair.push({ key: 'youtube-subscriber-badge', description: 'YouTube Subscriber Badge', emoji: '📺' });
+
+  // TODO:  move to a renderMessageFlair() function
   if (message.flair) {
     // for each flair, render an emoji span
     message.flair.forEach(flair => {
@@ -132,8 +137,22 @@ export default function createChatMessageElement(message, messageTime, chatWindo
         flairSpan.textContent = flair.key;
       }
 
+
+
+      // check 
+      if (flair.key === 'youtube-subscriber-badge') {
+        // create a new this.bp.webcomponents.BPYouTubeSubscriber element
+        //const el = document.createElement('bp-youtube-subscriber');
+        //el.setAttribute('endpoint', 'http://localhost:11111/api/youtube/subscription');
+        
+        //flairSpan.appendChild(el);
+        //const youtubeSubscriber = new this.bp.webcomponents.BPYouTubeSubscriber();
+        //flairSpan.appendChild(youtubeSubscriber);
+      }
+    
+
       // set title attribute to flair key
-    flairSpan.setAttribute('title', flair.description);
+      flairSpan.setAttribute('title', flair.description);
       // clicking on flair should bp.open('inventory');
       flairSpan.addEventListener('click', (e) => {
         e.preventDefault();

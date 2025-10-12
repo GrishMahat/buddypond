@@ -23,35 +23,64 @@ export default async function renderChatMessage(message, _chatWindow) {
       message.text = forbiddenNotes.filter(message.text);
     }
     */
-  
+
     // check for replies
     if (message.replyto) {
-      // console.log('REPLYTO', message);
+        // console.log('REPLYTO', message);
 
-      // lookup the message by message.replyTo UUID
-      let replyMessageEl = $(`.aim-chat-message[data-uuid="${message.replyto}"]`);
-      if (replyMessageEl.length > 0) {
-        // check if data attribe from matches this.bp.me
-        let replyFrom = replyMessageEl.attr('data-from');
-        if (replyFrom && replyFrom === this.bp.me) {
-          // we replied to ourselves
-          console.log('someone replied to our message');
-          this.bp.emit('buddy::message::processed', message);
+        // lookup the message by message.replyTo UUID
+        let replyMessageEl = $(`.aim-chat-message[data-uuid="${message.replyto}"]`);
+        if (replyMessageEl.length > 0) {
+            // check if data attribe from matches this.bp.me
+            let replyFrom = replyMessageEl.attr('data-from');
+            if (replyFrom && replyFrom === this.bp.me) {
+                // we replied to ourselves
+                console.log('someone replied to our message');
+                this.bp.emit('buddy::message::processed', message);
 
-        } else {
-          // we replied to someone else
-          console.log('should not happen someone replied to someone else');
+            } else {
+                // we replied to someone else
+                console.log('should not happen someone replied to someone else');
+            }
         }
-      }
     }
 
     if (checkMessageForMentions.call(this, message)) {
-      // play notification sound for mentions
-      this.bp.emit('buddy::message::processed', message);
+        // play notification sound for mentions
+        this.bp.emit('buddy::message::processed', message);
     }
 
     // TODO: needs to check for links inside the message, not just entire links
     checkForLinksInMessage(message);
+    console.log('message after checkForLinksInMessage', message);
+    if (message.ragResult && !message.card) {
+
+        if (message.ragResult.spells) {
+            message.card = {
+                type: 'spell',
+                spellType: 'spells',
+                targetType: message.ragResult.spells[0].spell.target,
+                spell: message.ragResult.spells[0].spell.name
+            }
+        } else {
+            /*
+            message.card = {
+              type: 'rag-result',
+              ragResult: message.ragResult
+            };
+            */
+
+        }
+
+
+    }
+
+    if (message.ragResult && message.ragResult.songs) {
+        // console.log('RAG SONGS', message.ragResult.songs);
+        // TODO: render this is a a youtube card / songs card / even a data card
+        // rag-result-card.html
+        // simple debug card for to view the ragResult data
+    }
 
     // if there is a #pondname in the message, add a pond card type
     if (message.text && message.text.length > 0) {
@@ -226,7 +255,7 @@ export default async function renderChatMessage(message, _chatWindow) {
         `;
         reactionsContainer.appendChild(reactionElement);
       }
-    
+     
       messageContent.appendChild(reactionsContainer);
       }*/
         // find the .aim-message-reactions container inside the reactedMessageEl
