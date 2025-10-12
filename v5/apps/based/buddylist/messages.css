@@ -172,6 +172,7 @@
     overflow-y: auto;
     /* ~50px */
     padding: 0.5rem;
+    width: 600px;
     /* ~8px, uncommented and adjusted */
 }
 
@@ -461,6 +462,15 @@
     /* ~14px */
     line-height: 1.4;
     word-break: break-word;
+}
+
+.aim-message-content pre {
+    padding: 0.5rem;
+    /* ~8px */
+    border-radius: 0.25rem;
+    /* ~4px */
+    overflow-x: auto;
+    width: 600px;
 }
 
 .aim-context-menu {
