@@ -9,7 +9,12 @@ export default async function applyData(el, data) {
         return spell.name === data.spell;
     });
 
-    // console.log('Spell data', spell);
+    if (!spell) {
+      // set spell to random spell
+      spell = allSpells[Math.floor(Math.random() * allSpells.length)];
+    }
+
+    console.log('Spell data', data);
 
     if (spell && spell.costSymbol) {
         let costSymbols = spell.costSymbol.split(',');

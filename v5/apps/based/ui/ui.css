@@ -1,90 +1,87 @@
+/* TODO: all classes should scoped under .buddypond-body class */
+
+.buddypond-body {
+  /* base scope wrapper (optional global vars or resets here if needed) */
+}
+
 /* ui states */
-.error {
+.buddypond-body .error {
   color: red !important;
 }
 
-.disabled {
-  /* pointer-events: none; */
+.buddypond-body .disabled {
   opacity: 0.6;
   cursor: not-allowed !important;
 }
 
-.show {
+.buddypond-body .show {
   display: flex !important;
 }
 
-.hide {
+.buddypond-body .hide {
   display: none;
 }
 
-.visible {
+.buddypond-body .visible {
   visibility: visible !important;
 }
 
-.hidden {
+.buddypond-body .hidden {
   visibility: hidden !important;
 }
 
 /* default styles */
-a {
+.buddypond-body a {
   text-decoration: none;
-  /* color: #000; */
 }
 
-a:hover {
+.buddypond-body a:hover {
   text-decoration: underline;
 }
 
-a:active {
+.buddypond-body a:active {
   color: #000;
 }
 
-.autocomplete-results {
+.buddypond-body .autocomplete-results {
   border: 1px solid #ccc;
   position: absolute;
-  z-index: 1000;
+  z-index: 8888;
   display: none;
-  /* Hidden by default */
   bottom: 0px;
   width: 100%;
   max-height: 120px;
-  /* Set a maximum height */
   overflow-y: auto;
-  /* Enable vertical scrolling */
   overflow-x: hidden;
-  /* Hide horizontal scroll */
-  z-index: 8888;
 }
 
-.autocomplete-item {
+.buddypond-body .autocomplete-item {
   padding: 8px;
   cursor: pointer;
   background-color: #fff;
 }
 
-.autocomplete-item:hover {
+.buddypond-body .autocomplete-item:hover {
   background-color: #f0f0f0;
 }
 
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul {
+.buddypond-body h1,
+.buddypond-body h2,
+.buddypond-body h3,
+.buddypond-body h4,
+.buddypond-body h5,
+.buddypond-body h6,
+.buddypond-body ul {
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 0;
 }
 
-.link {
+.buddypond-body .link {
   text-decoration: underline;
 }
 
-
-.action-button {
+.buddypond-body .action-button {
   background: #00d1b2 !important;
   color: #121212 !important;
   padding: 10px 20px;
@@ -95,21 +92,21 @@ ul {
   transition: background 0.3s ease;
 }
 
-.action-button:hover {
+.buddypond-body .action-button:hover {
   background: #008c7e !important;
 }
 
-.desktop-section {
-    background: var(--desktop_section-background);
-    color: var(--desktop_section-color);
+.buddypond-body .desktop-section {
+  background: var(--desktop_section-background);
+  color: var(--desktop_section-color);
 }
 
-.desktop-overlay {
-    background: var(--desktop_overlay-background);
-    color: var(--desktop_overlay-color);
+.buddypond-body .desktop-overlay {
+  background: var(--desktop_overlay-background);
+  color: var(--desktop_overlay-color);
 }
 
-.desktopInput {
+.buddypond-body .desktopInput {
   padding: 6px;
   width: 9vw;
   text-decoration: none;
@@ -118,90 +115,85 @@ ul {
   border-radius: 4px;
 }
 
-.tab-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.buddypond-body .tab-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.tab-list li {
-    margin: 0;
+.buddypond-body .tab-list li {
+  margin: 0;
 }
 
-.tab-list li:hover {
+.buddypond-body .tab-list li:hover {
   background: var(--desktop_element_hover-background);
 }
 
-.tab-list a {
-    display: block;
-    padding: 0.75rem 1.5rem;
-    color: #666;
-    text-decoration: none;
-    border-right: 1px solid #ddd;
+.buddypond-body .tab-list a {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: #666;
+  text-decoration: none;
+  border-right: 1px solid #ddd;
 }
 
-.tab-list a:hover {
-    text-decoration: none;
+.buddypond-body .tab-list a:hover {
+  text-decoration: none;
 }
 
-.tab-list a.active {
-    background: #fff;
-    border-bottom: 2px solid #007bff;
-    margin-bottom: -1px;
-    font-weight: bold;
+.buddypond-body .tab-list a.active {
+  background: #fff;
+  border-bottom: 2px solid #007bff;
+  margin-bottom: -1px;
+  font-weight: bold;
 }
 
-.tabs-container .tab-list {
+.buddypond-body .tabs-container .tab-list {
   display: flex;
-  /* gap: 20px; */
   align-items: center;
   justify-content: center;
   font-size: 18px;
   user-select: none;
 }
 
-.tabs-container .tab-list li {
+.buddypond-body .tabs-container .tab-list li {
   display: inline-block;
-  /* margin-right: 10px; */
-  /* small border */
   user-select: none;
 }
 
-.tabs-container .tab-list li.active a {
+.buddypond-body .tabs-container .tab-list li.active a {
   font-weight: bold;
   color: var(--desktop_text-color);
 }
 
-.tabs-container .tab-content {
+.buddypond-body .tabs-container .tab-content {
   display: none;
   padding: 10px;
-  /* border: 1px solid #ccc; */
   margin-top: -1px;
 }
 
-.tabs-container .tab-content:target {
+.buddypond-body .tabs-container .tab-content:target {
   display: block;
 }
 
-#buddypad {
+.buddypond-body #buddypad {
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
 }
 
-button.largest {
+.buddypond-body button.largest {
   padding: 10px 20px;
   font-size: 24px;
   min-height: 70px;
 }
 
-.ui-button {
+.buddypond-body .ui-button {
   width: 100px;
   cursor: pointer;
-  border: solid;
-  border-width: 1px;
+  border: solid 1px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -210,68 +202,61 @@ button.largest {
   border-radius: 4px;
 }
 
-.ui-button:hover {
+.buddypond-body .ui-button:hover {
   color: #008F11;
   background-color: #FFF;
   filter: drop-shadow(5px 5px 2px #4444dd);
-  /*
-    animation-name: rainbow;
-    animation-duration: 2.1111s;
-    */
   opacity: 0.7;
   animation-iteration-count: infinite;
 }
-
 
 @keyframes ui-button {
   from {
     background-color: blue;
   }
-
   to {
     background-color: yellow;
   }
 }
+
 @media (max-width: 767px) and (pointer: coarse) and (hover: none) {
-    /* Set base font size for consistency (optional, only if not already set) */
-    html {
-        font-size: 16px; /* Adjust to 14px for smaller scaling if needed */
-    }
+  .buddypond-body html {
+    font-size: 16px;
+  }
 
-    .ui-button {
-        width: 100%; /* Unchanged, full-width is good */
-        font-size: 1rem; /* ~16px, slightly increased from 14px for readability */
-        padding: 0.75rem; /* ~12px, added for touch-friendly tap target */
-    }
+  .buddypond-body .ui-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
 
-    .tabs-container .tab-list {
-        text-align: center; /* Unchanged */
-        font-size: 1.25rem; /* ~20px, reduced from 44px */
-        flex-direction: column; /* Unchanged, good for mobile */
-        width: 100%; /* Unchanged, full-width is good */
-    }
+  .buddypond-body .tabs-container .tab-list {
+    text-align: center;
+    font-size: 1.25rem;
+    flex-direction: column;
+    width: 100%;
+  }
 
-    .tabs-container .tab-list li {
-        margin-right: 0; /* Unchanged */
-        margin-bottom: 0.625rem; /* ~10px, unchanged but in rem */
-        width: 100%; /* Unchanged */
-    }
+  .buddypond-body .tabs-container .tab-list li {
+    margin-right: 0;
+    margin-bottom: 0.625rem;
+    width: 100%;
+  }
 
-    .tabs-container .tab-list li a {
-        font-size: 1.5rem; /* ~24px, reduced from 64px */
-        width: 100%; /* Unchanged */
-        padding: 0.75rem; /* ~12px, added for touch-friendly tap target */
-    }
+  .buddypond-body .tabs-container .tab-list li a {
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 0.75rem;
+  }
 }
 
-table {
+.buddypond-body table {
   background: var(--ui_table-background);
   color: var(--ui_table-color);
   border: var(--ui_table-border);
 }
 
-/* ui_table_row_even */
-table tr:nth-child(even) {
+.buddypond-body table tr:nth-child(even) {
   background: var(--ui_table_row_even-background);
   color: var(--ui_table_row_even-color);
   border: var(--ui_table_row_even-border);
@@ -279,57 +264,63 @@ table tr:nth-child(even) {
 
 /* Discord or low-height media query */
 @media (max-height: 480px) {
-
-  .tabs-container {
+  .buddypond-body .tabs-container {
     width: 80%;
   }
-  .tabs-container .tab-list {
+
+  .buddypond-body .tabs-container .tab-list {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    /* width: 3.5rem; */
     position: absolute;
     right: 0;
     top: 0;
-    background: rgba(60, 60, 60, 0.9); /* Match taskbar background */
+    background: rgba(60, 60, 60, 0.9);
     backdrop-filter: blur(0.75rem);
-    border-right: 0.0625rem solid rgba(255, 255, 255, 0.1); /* ~1px */
-    padding: 0.5rem; /* ~8px */
-    z-index: 99998; /* Below taskbar */
+    border-right: 0.0625rem solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    z-index: 99998;
   }
-  .tabs-container .tab-list li {
+
+  .buddypond-body .tabs-container .tab-list li {
     width: 100%;
-    margin-bottom: 0.625rem; /* ~10px */
+    margin-bottom: 0.625rem;
     margin-right: 0;
   }
-  .tabs-container .tab-list li a {
+
+  .buddypond-body .tabs-container .tab-list li a {
     width: 100%;
-    padding: 0.5rem; /* ~8px, compact for vertical */
-    font-size: 0.875rem; /* ~14px, smaller for vertical fit */
+    padding: 0.5rem;
+    font-size: 0.875rem;
     border-right: none;
-    border-bottom: 1px solid #ddd; /* Separator for vertical tabs */
+    border-bottom: 1px solid #ddd;
     text-align: center;
-    color: #e0e0e0; /* Match taskbar text */
+    color: #e0e0e0;
   }
-  .tabs-container .tab-list li.active a {
+
+  .buddypond-body .tabs-container .tab-list li.active a {
     border-bottom: 2px solid #007bff;
     font-weight: bold;
     color: var(--desktop_text-color);
   }
-  .tabs-container .tab-list li:hover {
+
+  .buddypond-body .tabs-container .tab-list li:hover {
     background: var(--desktop_element_hover-background);
   }
-  .tabs-container .tab-content {
-    width: calc(100% - 4rem); /* Adjust for tab width and padding */
-    padding: 0.75rem; /* ~12px */
-    font-size: 1rem; /* ~16px */
+
+  .buddypond-body .tabs-container .tab-content {
+    width: calc(100% - 4rem);
+    padding: 0.75rem;
+    font-size: 1rem;
   }
-  .tabs-container .tab-content:target {
+
+  .buddypond-body .tabs-container .tab-content:target {
     display: block;
   }
-  .ui-button {
+
+  .buddypond-body .ui-button {
     width: 100%;
-    font-size: 1rem; /* ~16px */
-    padding: 0.75rem; /* ~12px */
+    font-size: 1rem;
+    padding: 0.75rem;
   }
 }

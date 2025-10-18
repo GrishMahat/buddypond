@@ -1,3 +1,5 @@
+// TODO: add warning when using default ESC key to close window, don't want to close minipaint accidentally / without saving
+// same pattern applies to several apps, new Window({ warnBeforeClose: function() { return true; } }), etc
 export default class MiniPaint {
   constructor(bp, options = {}) {
     this.bp = bp;

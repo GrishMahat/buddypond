@@ -1,5 +1,9 @@
 export default class AudioNode {
   constructor(audioElement, defaultVolume = 0.0) {
+
+    /*
+    undefined is not a constructor (evaluating 'new(window.AudioContext||window.webkitAudioContext)')
+    */
     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     this.audioElement = audioElement;
 

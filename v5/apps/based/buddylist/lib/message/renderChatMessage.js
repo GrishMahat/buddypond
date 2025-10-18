@@ -52,7 +52,7 @@ export default async function renderChatMessage(message, _chatWindow) {
 
     // TODO: needs to check for links inside the message, not just entire links
     checkForLinksInMessage(message);
-    console.log('message after checkForLinksInMessage', message);
+    // console.log('message after checkForLinksInMessage', message);
     if (message.ragResult && !message.card) {
 
         if (message.ragResult.spells) {
@@ -70,6 +70,24 @@ export default async function renderChatMessage(message, _chatWindow) {
             };
             */
 
+        }
+
+
+        // check if message is JSON by parsing it and if so show.  ia JSON view....
+        let isJSON = false;
+        let parsed = null;
+        try {
+            parsed = JSON.parse(message.text);
+            isJSON = true;
+        } catch (e) {
+            isJSON = false;
+        }
+
+        if (isJSON) {
+            message.card = {
+                type: 'data',
+                json: parsed
+            };
         }
 
 

@@ -42,6 +42,12 @@ function uuid() {
     return new Date().getTime();
 }
 
+// TODO: more advanced configuration overrides for chat windows and buddylist itself
+// hideBuddylist: true
+// loadPondsInPannel: true
+// - defaultPond: 'Buddy' ( default pond to open on login )
+// - openDefaultPond: true ( open the default pond on login )
+//  remove dep on taskbar ( later )
 export default class BuddyList {
     constructor(bp, options = {}) {
         this.bp = bp;
@@ -56,10 +62,11 @@ export default class BuddyList {
             avatarCache: new Map()
         };
 
-        this.defaultPond = 'Buddy';
         this.subscribedBuddies = [];
         this.subscribedPonds = [];
         this.options = options;
+
+        this.defaultPond = options.defaultPond || 'Buddy';
 
         // ensures autocomplete options are always used regardless of entry
         if (bp.apps.buddyscript && bp.apps.buddyscript.commands) {
@@ -129,6 +136,7 @@ export default class BuddyList {
     }
 
     async open(config = { type: 'buddylist-profile' }) {
+        console.log('BuddyList open called', config)
         // buddylist supports (2) window types for bp.open('buddylist, { type: 'buddylist-profile' })
         // 'buddylist-profile' - the default buddylist window
         // 'buddylist-chat' - a chat window
@@ -141,6 +149,9 @@ export default class BuddyList {
         if (config.openDefaultPond === true) {
             this.openDefaultPond = true;
         }
+        // alert(config.defaultPond);
+        this.defaultPond = config.defaultPond || this.defaultPond || 'Buddy';
+
 
         // check localStorage for buddylist.openDefaultPond
         let localValue = bp.get('openPondChatRooms');
@@ -152,6 +163,36 @@ export default class BuddyList {
         if (config.showPond === false) {
             this.showPond = false;
         }
+
+        if (this.defaultPond && this.openDefaultPond === true) {
+            // alert('Opening default pond chat window ' + this.defaultPond);
+            setTimeout(() => {
+                // console.log('Opening default pond chat window', this.defaultPond);
+                let chatWindow = this.openChatWindow({ pondname: this.defaultPond });
+                chatWindow.minimize();
+                //alert('hi')
+                $('.aim-room-list', chatWindow.content).hide();
+                $('.aim-user-list-area', chatWindow.content).hide();
+
+                // set the .bp_window_content height to 600px max
+                $(chatWindow.content).css('max-height', '600px');
+                $(chatWindow.content).css('height', '600px');
+
+                this.options.loadPondsInPannel = '.targetDiv2';
+                if (this.options.loadPondsInPannel && document.querySelector(this.options.loadPondsInPannel)) {
+                    document.querySelector(this.options.loadPondsInPannel).appendChild(chatWindow.content);
+                }
+
+
+                if (window.discordView) {
+                    chatWindow.minimize();
+                }
+                // loads the hotpond client that populates room lists
+                bp.load('pond');
+            }, 100);
+        }
+
+
 
         if (config.type === 'buddylist-profile') {
 
@@ -168,15 +209,27 @@ export default class BuddyList {
                     buddyListWindow.content.appendChild(this.createHTMLContent(htmlStr));
                     this.buddyListWindow = buddyListWindow;
                 }
+
+                if (config.showBuddyList === false) {
+                    // minimize the buddylist window if it exists
+                    // this.buddyListWindow.minimize();
+                }
+
                 this.buddyListWindow.open();
                 this.bp.apps.ui.windowManager.focusWindow(this.buddyListWindow);
                 this.buddyListWindow.restore();
                 $('.loginForm input[name="username"]').focus();
+
+
+
+
                 return 'buddylist already open';
             }
 
-            this.opened = true;
 
+
+            this.opened = true;
+            // return;
             // loads affirmations messages via the affirmations app
             let affirmations = await this.bp.importModule('affirmations');
 
@@ -324,8 +377,8 @@ export default class BuddyList {
     handleAuthentication() {
 
         if (this.bp.connected) {
-          // if we are already connected, do nothing
-          return; 
+            // if we are already connected, do nothing
+            return;
         }
 
         const api = this.bp.apps.client.api;
@@ -423,9 +476,14 @@ export default class BuddyList {
 
         // wait until buddylist is connected and then opens default chat window if defined
         if (this.defaultPond && this.openDefaultPond === true) {
+            // alert('Opening default pond chat window ' + this.defaultPond);
             setTimeout(() => {
                 // console.log('Opening default pond chat window', this.defaultPond);
                 let chatWindow = this.openChatWindow({ pondname: this.defaultPond });
+                this.options.loadPondsInPannel = '.targetDiv2';
+                // hide the .aim-room-list
+                // attach the chatWindow.content to the .targetDiv2 if it exists
+
                 if (window.discordView) {
                     chatWindow.minimize();
                 }

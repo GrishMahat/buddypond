@@ -3,6 +3,8 @@ import WindowManager from "./Window/WindowManager.js";
 import CountdownManager from "../ui/CountdownManager.js";
 import LightBox from "./LightBox.js";
 import showAlert from "./showAlert.js";
+import { BPMention } from './webcomponents/bp-mention/bp-mention.js';
+import { BPYouTubeSubscriber } from './webcomponents/bp-mention/bp-youtube-subscriber/bp-youtube-subscriber.js';
 
 export default class UI {
     constructor(bp, options = {}) {
@@ -46,6 +48,11 @@ export default class UI {
         // Run on load and resize
         window.addEventListener('resize', setViewportHeight);
         setViewportHeight();
+
+        this.bp.webcomponents = this.bp.webcomponents || {};
+        this.bp.webcomponents.BPMention = BPMention;
+        this.bp.webcomponents.BPYouTubeSubscriber = BPYouTubeSubscriber;
+        //window.BPMention = BPMention;
 
         return this;
     }

@@ -266,6 +266,16 @@ export default function registerEventHandlers() {
             // Set a new timeout to remove the typing message after very short pause
             // since there already is a delay from the server
             let typingDuration = message.typingDuration || 500;
+            let typingDelay = message.typingDelay || 0;
+
+            if (typingDuration < 1) {
+              // negative values indicate to not auto-remove
+              return;
+            }
+            /*
+            typingDuration -= typingDelay;
+            */
+
             this.showingIsTyping[typingIndicatorId] = setTimeout(() => {
                 typingIndicator.remove();
             }, typingDuration);

@@ -172,7 +172,7 @@
     overflow-y: auto;
     /* ~50px */
     padding: 0.5rem;
-    width: 600px;
+    /* width: 600px; */
     /* ~8px, uncommented and adjusted */
 }
 
