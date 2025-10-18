@@ -90,7 +90,7 @@ export default class BuddyScript {
             if (this.isValidBuddyScript(command)) {
                 results.push(this.executeCommand(command, commandArgs, options));
             } else {
-                this.alertInvalidCommand();
+                this.alertInvalidCommand(part, parts);
                 return { type: 'invalid' };
             }
         }
@@ -98,8 +98,8 @@ export default class BuddyScript {
         return results;
     }
 
-    alertInvalidCommand() {
-        console.log('Invalid BuddyScript. Will not send.');
+    alertInvalidCommand(part, parts) {
+        console.log('Invalid BuddyScript. Will not send.', part, parts);
     }
 
     addCommand(name, action) {
