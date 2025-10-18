@@ -48,13 +48,13 @@ function updatePondConnectedUsers(data) {
     // sort by buddyname
     // console.log('_users before sort', _users);
     _users.sort((a, b) => {
-        let nameA = a.userId ? a.userId.toLowerCase() : "";
-        let nameB = b.userId ? b.userId.toLowerCase() : "";
-        return nameA.localeCompare(nameB);
+        let keyA = a.displayName || a.userId;
+        let keyB = b.displayName || b.userId;
+        return keyA.localeCompare(keyB);
     });
 
     _users.forEach((user) => {
-        let { userId, profilePicture } = user;
+        let { userId, displayName, profilePicture } = user;
         userId = userId ? userId.toString() : null;
         if (!userId || typeof userId !== "string") {
             console.log("Skipping invalid user with missing or non-string userId:", user);
@@ -100,7 +100,7 @@ function updatePondConnectedUsers(data) {
             const $profilePicture = createProfilePictureElement.call(this, userId, profilePicture);
             const $userText = $("<span>", {
                 class: "aim-user-item-text",
-                text: userId,
+                text: displayName || userId,
             });
             //console.log('$profilePicture', $profilePicture.html())
             //console.log('$userItem', $userItem.html())

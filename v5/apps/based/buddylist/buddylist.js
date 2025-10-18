@@ -171,8 +171,9 @@ export default class BuddyList {
                 let chatWindow = this.openChatWindow({ pondname: this.defaultPond });
                 chatWindow.minimize();
                 //alert('hi')
-                $('.aim-room-list', chatWindow.content).hide();
-                $('.aim-user-list-area', chatWindow.content).hide();
+                // TODO: add back with hideBuddylist option
+                //$('.aim-room-list', chatWindow.content).hide();
+                //$('.aim-user-list-area', chatWindow.content).hide();
 
                 // set the .bp_window_content height to 600px max
                 $(chatWindow.content).css('max-height', '600px');
