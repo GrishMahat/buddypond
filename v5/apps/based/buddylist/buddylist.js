@@ -164,12 +164,14 @@ export default class BuddyList {
             this.showPond = false;
         }
 
+        /*
         if (this.defaultPond && this.openDefaultPond === true) {
             // alert('Opening default pond chat window ' + this.defaultPond);
+            // this really needs an event, not a timer....probaby when the desktop is ready?
             setTimeout(() => {
                 // console.log('Opening default pond chat window', this.defaultPond);
                 let chatWindow = this.openChatWindow({ pondname: this.defaultPond });
-                chatWindow.minimize();
+                // chatWindow.minimize();
                 //alert('hi')
                 // TODO: add back with hideBuddylist option
                 //$('.aim-room-list', chatWindow.content).hide();
@@ -190,8 +192,9 @@ export default class BuddyList {
                 }
                 // loads the hotpond client that populates room lists
                 bp.load('pond');
-            }, 100);
+            }, 1000); // increases to 1 second lets see if it patches it for now
         }
+          */
 
 
 
@@ -490,7 +493,7 @@ export default class BuddyList {
                 }
                 // loads the hotpond client that populates room lists
                 bp.load('pond');
-            }, 100);
+            }, 1000);
         }
 
     }
