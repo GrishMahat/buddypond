@@ -1,0 +1,1 @@
+{"version":3,"sources":["data-card.css"],"names":[],"mappings":"AAAA,iBAGI,qBAAsB,CACtB,cAAe,CAFf,YAAa,CADb,UAIJ","file":"data-card.css","sourcesContent":[".rag-result-json {\n    width: 100%;\n    height: 200px;\n    font-family: monospace;\n    font-size: 12px;\n}"]}

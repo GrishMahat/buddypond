@@ -1,0 +1,1 @@
+{"version":3,"sources":["rag-result-card.css"],"names":[],"mappings":"AACA,iBAGI,qBAAsB,CACtB,cAAe,CAFf,YAAa,CADb,UAIJ","file":"rag-result-card.css","sourcesContent":["\n.rag-result-json {\n    width: 100%;\n    height: 200px;\n    font-family: monospace;\n    font-size: 12px;\n}"]}
