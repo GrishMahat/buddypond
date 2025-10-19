@@ -181,7 +181,7 @@ export default function createChatMessageElement(message, messageTime, chatWindo
   }
 
   if (message.shadowClone) {
-    sender.textContent = `[ShadowClone]` + sender.textContent;
+    sender.textContent = `[Clone] ` + sender.textContent;
   }
 
   const timestamp = document.createElement('span');
