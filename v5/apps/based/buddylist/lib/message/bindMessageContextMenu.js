@@ -228,7 +228,7 @@ function performAction(action, target) {
     case 'say-message':
       console.log('Say message clicked');
       console.log('sayMessage', messageData);
-      this.bp.emit('say::message', messageData);
+      this.bp.emit('say::tts', messageData);
       break;
     case 'report-message':
       console.log('Report message clicked');

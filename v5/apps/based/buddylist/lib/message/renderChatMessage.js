@@ -72,12 +72,7 @@ export default async function renderChatMessage(message, _chatWindow) {
 
     }
 
-
-
   }
-
-
-
 
   // check if message is JSON by parsing it and if so show.  ia JSON view....
   let isJSON = false;
@@ -432,6 +427,49 @@ if (message.reactions) {
   messageTime = messageTime.toString();
 
   // Check to see if message is type card
+  let AI_CHAT_BOTS_TTS_ENABLED = true;
+  if (message.from === 'sama') {
+    // check to see if message.ctime is at least 4 seconds ago
+    let now = new Date().getTime();
+    let messageTimeNum = new Date(message.ctime).getTime();
+    let diff = now - messageTimeNum;
+    if (diff < 4000 && AI_CHAT_BOTS_TTS_ENABLED) {
+      // speak the message using TTS
+      console.log('SPEAKING SAMA MESSAGE WITH TTS', message);
+      this.bp.apps.say.tts(message.text, 'nova'); // 'nova' is sama's voice
+    }
+  }
+
+  if (message.from === 'tara') {
+    // check to see if message.ctime is at least 4 seconds ago
+    let now = new Date().getTime();
+    let messageTimeNum = new Date(message.ctime).getTime();
+    let diff = now - messageTimeNum;
+    if (diff < 4000 && AI_CHAT_BOTS_TTS_ENABLED) {
+      // speak the message using TTS
+      console.log('SPEAKING SAMA MESSAGE WITH TTS', message);
+      this.bp.apps.say.tts(message.text, 'shimmer'); // 'shimmer' is tara's voice
+    }
+  }
+  /*
+
+  if (message.from === 'Bobby') {
+    // check to see if message.ctime is at least 4 seconds ago
+    let now = new Date().getTime();
+    let messageTimeNum = new Date(message.ctime).getTime();
+    let diff = now - messageTimeNum;
+    if (diff < 4000 && AI_CHAT_BOTS_TTS_ENABLED) {
+      // speak the message using TTS
+      console.log('SPEAKING MARAK MESSAGE WITH TTS', message);
+      this.bp.apps.say.tts(message.text, 'onyx'); // 'onyx' is Marak's voice
+    }
+  }
+    */
+
+
+
+
+
 
   let container;
   if (message.card && this.bp && this.bp.apps && this.bp.apps.card) {
