@@ -77,7 +77,7 @@ function updatePondConnectedUsers(data) {
             const $textElement = userItem.find(".aim-user-item-text");
             if ($textElement.text() !== userId) {
                 // console.log(`Updating userId text for ${userId}`);
-                $textElement.text(userId);
+                // $textElement.text(userId);
             }
 
             const $profileContainer = userItem.find(".aim-profile-picture");
