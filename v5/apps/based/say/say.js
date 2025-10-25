@@ -41,10 +41,14 @@ export default class Say {
     console.log('speaking via tts endpoint', ttsEndpoint);
     console.log('with text:', text);
     console.log('with persona:', persona);
-
+    if (this.isSpeaking) {
+      console.log('TTS is already speaking. Please wait.');
+      return;
+    }
     // remove all the @ symbols from the text
     text = text.replace(/@/g, '');
-
+    this.isSpeaking = true;
+    let that = this;
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(`${ttsEndpoint}/speak`, {
@@ -79,6 +83,7 @@ export default class Say {
         // delete the audio element after playback
         audio.addEventListener('ended', () => {
           document.body.removeChild(audio);
+          that.isSpeaking = false;
         });
 
         mediaSource.addEventListener('sourceopen', async () => {

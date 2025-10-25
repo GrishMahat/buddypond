@@ -233,6 +233,20 @@ export default [
   }
 ,
   {
+    input: 'apps/based/bots/bots.js',
+    output: {
+      file: 'dist/apps/based/bots.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
+    ]
+  }
+,
+  {
     input: 'apps/based/browser/browser.js',
     output: {
       file: 'dist/apps/based/browser.js',
@@ -1691,6 +1705,20 @@ export default [
         minimize: true,
         sourceMap: true
       })
+    ]
+  }
+,
+  {
+    input: 'apps/based/pixels/pixels.js',
+    output: {
+      file: 'dist/apps/based/pixels.js',
+      format: 'es',
+      sourcemap: true,
+    },
+    plugins: [
+      resolve(),
+      commonjs(),
+      terser(),
     ]
   }
 ,
