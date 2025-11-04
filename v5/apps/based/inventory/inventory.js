@@ -20,6 +20,16 @@ export default class Inventory {
     return 'loaded Inventory';
   }
 
+  broadcastChannel() {
+
+    this.receiver = new BroadcastChannel("buddypond-inventory");
+  }
+
+  // can send messages if needed
+  sendMessage() {
+    this.receiver.postMessage({ type: "app", app: "inventory", action: "load", src: this.options.src || null });
+  }
+
   async open({ context } = {}) {
     if (!this.win) {
       this.win = await this.bp.window(this.window());
@@ -56,7 +66,7 @@ export default class Inventory {
         const defaultAvatar = this.bp.apps.buddylist.defaultAvatarSvg(me);
         profilePicture.innerHTML = defaultAvatar;
       }
-          
+
       $('.char-silhouette', this.win.content).append(profilePicture);
     }
     return this.win;
@@ -101,8 +111,8 @@ export default class Inventory {
       parent: $('#desktop')[0],
       width: 850,
       height: 600,
-      content: this.html,
-      //iframeContent: '/v5/apps/based/inventory/inventory.html',
+      //content: this.html,
+      iframeContent: '/v5/apps/based/inventory/app/build/',
       resizable: true,
       closable: true,
       onClose: () => {

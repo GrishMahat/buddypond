@@ -24,7 +24,12 @@
             <input type="number" id="coin-supply" placeholder="Total Supply" value="9001">
             <label for="coin-price">Initial Price (BUX):</label>
             <input type="number" id="coin-price" placeholder="Initial Price" value="0.001">
+            <label for="coin-deposit">Minimal Deposit (BUX):</label>
+            <input type="number" id="coin-deposit" placeholder="Deposit Amount" value="10">
             <button id="mint-coin" class="mint-coin action-button">Mint Coin</button>
+            <!-- <button id="deposit-coin" class="deposit-coin action-button">Deposit BUX</button> -->
+
+            
         </div>
 
         <div id="coin-leaderboard" class="coin-leaderboard tab-content">
@@ -89,6 +94,8 @@
                             <th>Symbol</th>
                             <th>Name</th>
                             <th>Supply</th>
+                            <th>Price (BUX)</th>
+                            <!-- <th>Market Cap (BUX)</th> -->
                             <th>Creator</th>
                         </tr>
                     </thead>
@@ -111,6 +118,7 @@
                             <th>Coin</th>
                             <th>Symbol</th>
                             <th>Supply</th>
+                            <th>Price (BUX)</th>
                             <th>Admin</th>
                         </tr>
                     </thead>

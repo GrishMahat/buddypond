@@ -24,13 +24,18 @@ export default async function render(parent) {
         this.resource.search(this.bp.me, { owner: this.bp.me })
     ]);
 
-    const coins = Object.fromEntries(allCoins.results.map(c => [c.symbol, c]));
+    console.log('All Coins:', allCoins);
+    console.log('Asset Data:', assetData);
 
+    const coins = Object.fromEntries(allCoins.results.map(c => [c.symbol, c]));
+    let prices = assetData.prices || {};
     this.portfolioData = {
         coins,
         assets: Object.fromEntries(assetData.results.map(asset => [asset.symbol, asset])),
         initialInvestment: 0 // Placeholder, fetch if needed
     };
+
+    console.log('Portfolio Data:', this.portfolioData);
 
     renderPortfolioTable.call(this, parent);
     renderCoinSelector.call(this, parent);

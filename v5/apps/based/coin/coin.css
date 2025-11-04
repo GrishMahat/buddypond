@@ -162,25 +162,25 @@
 }
 
 /* Alternating row colors */
-.user-coins tr:nth-child(even), .all-coins tr:nth-child(even) {
+.user-coins table tr:nth-child(even), .all-coins tr:nth-child(even) {
     background: #2a2a2a;
     color: #ddd;
 }
 
-.user-coins tr:nth-child(odd), .all-coins tr:nth-child(odd) {
+.user-coins table tr:nth-child(odd), .all-coins tr:nth-child(odd) {
     background: #1f1f1f;
     color: #ddd;
 }
 
 /* Hover effects */
-.user-coins tr:hover, .all-coins tr:hover {
+.user-coins table tr:hover, .all-coins tr:hover {
     background: #444;
     color: #fff;
     cursor: pointer;
 }
 
 /* Highlighting active rows */
-.user-coins tr.active, .all-coins tr.active {
+.user-coins table tr.active, .all-coins tr.active {
     background: #555;
     color: #ffcc00;
 }

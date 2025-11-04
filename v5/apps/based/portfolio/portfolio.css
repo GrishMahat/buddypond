@@ -110,23 +110,23 @@
 }
 
 /* Alternating row colors */
-.portfolio-table tr:nth-child(even), .all-coins tr:nth-child(even) {
+.portfolio-table table tr:nth-child(even), .all-coins tr:nth-child(even) {
     background: #2a2a2a;
 }
 
-.portfolio-table tr:nth-child(odd), .all-coins tr:nth-child(odd) {
+.portfolio-table table tr:nth-child(odd), .all-coins tr:nth-child(odd) {
     background: #1f1f1f;
 }
 
 /* Hover effects */
-.portfolio-table tr:hover, .all-coins tr:hover {
+.portfolio-table table tr:hover, .all-coins tr:hover {
     background: #444;
     color: #fff;
     cursor: pointer;
 }
 
 /* Highlighting active rows */
-.portfolio-table tr.active, .all-coins tr.active {
+.portfolio-table table tr.active, .all-coins tr.active {
     background: #555;
     color: #ffcc00;
 }
