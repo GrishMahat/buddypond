@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Introducing BuddyBots, autonomous AI agents that integrate seamlessly with Buddy Pond. Build, deploy, and monetize intelligent companions in the Buddy ecosystem.">
+    <meta name="keywords" content="BuddyBots, Buddy Pond, AI agents, autonomous agents, cryptocurrency">
+    <meta name="author" content="Buddy Pond Team">
+    <title>BuddyBots - Autonomous AI Agents | Buddy Pond</title>
+    <!-- Tailwind CSS CDN for sleek styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0e14;
+        }
+
+        .robot-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .flare-container {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .flare-image {
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .flare-container:hover .flare-image {
+            filter: brightness(1.2) saturate(1.3) drop-shadow(0 0 20px rgba(28, 107, 116, 0.6));
+        }
+
+        .lens-flare {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(100, 200, 255, 0.8) 10%, transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .lens-flare.active {
+            opacity: 1;
+        }
+
+        .text-link {
+            text-decoration: none;
+            color: #1c6b74;
+        }
+
+        .text-link:hover {
+            color: #2d8a96;
+        }
+
+        p>a {
+            color: #1c6b74;
+            text-decoration: underline !important;
+        }
+
+        p>a:hover {
+            color: #2d8a96;
+            text-decoration: none;
+        }
+
+        .bot-card {
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 200, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .bot-card:hover::before {
+            left: 100%;
+        }
+
+        .bot-card:hover {
+            border-color: #64c8ff;
+            box-shadow: 0 10px 40px rgba(100, 200, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .metallic-gradient {
+            background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 50%, #3d4a5f 100%);
+        }
+
+        .chrome-gradient {
+            background: linear-gradient(135deg, #52616b 0%, #c9d6df 50%, #52616b 100%);
+        }
+
+        .cyber-border {
+            border: 2px solid #64c8ff;
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.4), inset 0 0 20px rgba(100, 200, 255, 0.1);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(100, 200, 255, 0.6);
+        }
+
+        .green-glow {
+            text-shadow: 0 0 20px rgba(28, 107, 116, 0.8);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #2d3748 100%);
+            border-bottom: 2px solid #64c8ff;
+        }
+
+        .use-case-card {
+            background: linear-gradient(135deg, #2d3748 0%, #3d4a5f 100%);
+            border: 1px solid #52616b;
+            transition: all 0.4s ease;
+        }
+
+        .use-case-card:hover {
+            border-color: #1c6b74;
+            box-shadow: 0 10px 40px rgba(28, 107, 116, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .feature-emoji {
+            filter: drop-shadow(0 0 10px rgba(100, 200, 255, 0.6));
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+
+<body class="smooth-scroll bg-gradient-to-b from-[#0a0e14] via-[#1a1f2e] to-[#0a0e14]">
+    <header class="text-white py-4 sticky top-0 z-50 shadow-lg backdrop-blur-sm bg-opacity-95">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="https://buddypond.com" class="flex items-center space-x-2">
+                <img src="./img/buddy-the-bot-256.png" alt="BuddyBots Logo" class="h-10 w-10" />
+                <span class="text-2xl font-bold robot-font glow-text">BuddyBots</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="hover:text-[#64c8ff] transition">About</a>
+                <a href="#features" class="hover:text-[#64c8ff] transition">Features</a>
+                <a href="#use-cases" class="hover:text-[#64c8ff] transition">Use Cases</a>
+                <a href="#community" class="hover:text-[#64c8ff] transition">Community</a>
+            </nav>
+            <a href="https://buddybots.ai" target="_blank"
+                class="bg-gradient-to-r from-[#1c6b74] to-[#2d8a96] text-white px-4 py-2 rounded-full font-semibold hover:from-[#2d8a96] hover:to-[#1c6b74] transition hover-scale cyber-border">Create a BuddyBot</a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 metallic-gradient">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold robot-font text-center mb-8 text-[#c9d6df] glow-text">What are BuddyBots?</h2>
+            <div class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+                <div class="flare-container">
+                    <img src="./img/buddy-the-bot-256.png" alt="BuddyBots AI Agents"
+                        class="w-full md:w-96 rounded-lg shadow-2xl hover-scale flare-image" />
+                    <div class="lens-flare"></div>
+                </div>
+                <div class="text-[#c9d6df]">
+                    <p class="text-lg mb-4">BuddyBots are autonomous AI agents that integrate seamlessly with <a href="https://buddypond.com"
+                            target="_blank" class="text-link font-semibold">Buddy Pond</a>. These intelligent companions can perform tasks, 
+                        interact with users, manage assets, and participate in the Buddy ecosystem autonomously.</p>
+                    <p class="text-lg mb-4">Built on cutting-edge AI technology and powered by <a href="https://buddybots.ai" target="_blank" class="text-link font-semibold">Buddy Bots AI</a>, 
+                        BuddyBots bring automation, intelligence, and creativity to your Buddy Pond experience. Create custom bots 
+                        for trading, community management, content creation, gaming, and more!</p>
+
+                    <p class="text-lg mb-6">Create your Bot at <a href="https://buddybots.ai" target="_blank" class="text-link font-semibold">buddybots.ai</a> and enable the "BuddyPond" service in your bot.</p>
+
+                    <a href="https://buddybots.ai" target="_blank"
+                        class="inline-block bg-gradient-to-r from-[#1c6b74] to-[#2d8a96] text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-2xl hover:from-[#2d8a96] hover:to-[#1c6b74] transition hover-scale cyber-border">Build Your Bot!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gradient-to-b from-[#0a0e14] to-[#1a1f2e]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold robot-font text-center mb-8 text-[#c9d6df] glow-text">BuddyBots Features</h2>
+            <p class="text-center text-lg mb-12 text-[#9ba3af]">Powerful capabilities designed for the Buddy Pond ecosystem.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">🤖</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#64c8ff] robot-font">Autonomous Operation</h3>
+                    <p class="text-lg text-[#c9d6df]">BuddyBots run 24/7, executing tasks, monitoring conditions, and responding to events without human intervention.</p>
+                </div>
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">💰</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#1c6b74] robot-font green-glow">$BUDDYPOND Integration</h3>
+                    <p class="text-lg text-[#c9d6df]">Bots can hold, transfer, and trade <a href="https://buddypond.com/coin" target="_blank">$BUDDYPOND</a> and other Buddy Coins, participating fully in the economy.</p>
+                </div>
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#64c8ff] robot-font">Customizable Personalities</h3>
+                    <p class="text-lg text-[#c9d6df]">Design bots with unique personalities, communication styles, and behavioral patterns to match your needs.</p>
+                </div>
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#64c8ff] robot-font">Smart Analytics</h3>
+                    <p class="text-lg text-[#c9d6df]">Built-in analytics and reporting help you track bot performance, ROI, and engagement metrics.</p>
+                </div>
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">🔗</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#64c8ff] robot-font">API Access</h3>
+                    <p class="text-lg text-[#c9d6df]">Connect BuddyBots to external services, data sources, and platforms through our robust API.</p>
+                </div>
+                <div class="bot-card p-6 rounded-lg shadow-2xl text-center">
+                    <div class="feature-emoji mb-4">🛡️</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#64c8ff] robot-font">Secure & Audited</h3>
+                    <p class="text-lg text-[#c9d6df]">Enterprise-grade security with audited smart contracts and encrypted communications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="py-16 metallic-gradient">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold robot-font text-center mb-8 text-[#c9d6df] glow-text">BuddyBots Use Cases</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">🏪 Trading Bots</h3>
+                    <p class="text-lg text-[#c9d6df]">Automate your trading strategy with bots that monitor markets, execute trades, and manage your portfolio 24/7 on the Buddy Trading Platform.</p>
+                </div>
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">👥 Community Managers</h3>
+                    <p class="text-lg text-[#c9d6df]">Deploy bots to moderate discussions, welcome new members, organize events, and keep your Buddy Pond community engaged.</p>
+                </div>
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">🎮 Gaming Companions</h3>
+                    <p class="text-lg text-[#c9d6df]">Create AI teammates, opponents, or NPCs for Buddy Pond games. BuddyBots learn and adapt to player strategies.</p>
+                </div>
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">📝 Content Creators</h3>
+                    <p class="text-lg text-[#c9d6df]">Generate posts, updates, artwork, and media for your Buddy Pond presence. Keep your audience engaged automatically.</p>
+                </div>
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">🔔 Alert Systems</h3>
+                    <p class="text-lg text-[#c9d6df]">Monitor blockchain events, price changes, or community activity and receive instant notifications through your preferred channels.</p>
+                </div>
+                <div class="use-case-card p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-bold robot-font mb-4 text-[#1c6b74] green-glow">🤝 Personal Assistants</h3>
+                    <p class="text-lg text-[#c9d6df]">Manage your Buddy Files, schedule tasks, track your Buddy Coins, and help you stay organized within the ecosystem.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-20 bg-gradient-to-b from-[#0a0e14] to-[#1a1f2e]">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold robot-font mb-8 text-[#c9d6df] glow-text">Join the BuddyBots Community</h2>
+            <p class="text-lg mb-8 text-[#9ba3af]">Connect with bot creators, developers, and AI enthusiasts. Stay updated on the latest BuddyBots developments!</p>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://twitter.com/hopon_buddypond" target="_blank" class="hover-scale transition-all hover:filter hover:brightness-125">
+                    <img src="../coin/x-icon.png" alt="Twitter" class="h-12 w-12" />
+                </a>    
+
+                <a href="https://buddypond.com" target="_blank" class="hover-scale transition-all hover:filter hover:brightness-125">
+                    <img src="../coin/buddy-the-frog.png" alt="Official Buddy Pond Website" class="h-12 w-12" />
+                </a>
+                <a href="https://buddypond.com/discord" target="_blank" class="hover-scale transition-all hover:filter hover:brightness-125">
+                    <img src="../coin/discord-icon.webp" alt="Discord" class="h-12 w-12" />
+                </a>
+                <a href="https://t.me/@BuddyPond" target="_blank" class="hover-scale transition-all hover:filter hover:brightness-125">
+                    <img src="../coin/telegram-icon.webp" alt="Telegram" class="h-12 w-12" />
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="join" class="py-16 chrome-gradient relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#1c6b74]/20 to-transparent"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold robot-font mb-2 text-[#0a0e14] glow-text">Ready to Build Your BuddyBot?</h2>
+            <p class="text-md uppercase tracking-wide font-semibold text-[#1a1f2e] mb-6 robot-font">Join the AI Revolution!</p>
+            <p class="text-lg mb-8 text-[#2d3748]">Start creating autonomous AI agents today and be part of the BuddyBots ecosystem!</p>
+            <a href="https://buddybots.ai" target="_blank" class="inline-block bg-gradient-to-r from-[#1c6b74] to-[#2d8a96] text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-2xl hover:from-[#2d8a96] hover:to-[#1c6b74] transition hover-scale cyber-border">
+                Get Started with BuddyBots
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0a0e14] text-[#9ba3af] py-8 border-t-2 border-[#64c8ff]">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-4 text-[#c9d6df]">&copy; 2025 Buddy Pond. All rights reserved.</p>
+            <p class="text-sm">Disclaimer: BuddyBots are experimental AI agents. Use responsibly and only trust
+                information from buddypond.com.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for smooth scrolling and effects -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const container = document.querySelector('.flare-container');
+        const flare = document.querySelector('.lens-flare');
+
+        if (container && flare) {
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left - 25;
+                const y = e.clientY - rect.top - 25;
+                flare.style.transform = `translate(${x}px, ${y}px)`;
+                flare.classList.add('active');
+            });
+
+            container.addEventListener('mouseleave', () => {
+                flare.classList.remove('active');
+            });
+        }
+    </script>
+
+</body>
+
+</html>
