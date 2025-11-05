@@ -9,8 +9,9 @@ This is a Svelte-based inventory management application converted from the legac
 - **Sorting**: Sort by rarity, name, or type (with ascending/descending toggle)
 - **Trading**: Trade items with other players
 - **Responsive Design**: Works on desktop and mobile
-- **BroadcastChannel Support**: Communication with parent window via BroadcastChannel
+- **BroadcastChannel Communication**: Real-time communication via `buddypond-inventory` channel
 - **API Integration**: Connects to inventory backend API
+- **Multi-user Support**: View any user's inventory by sending buddyname via BroadcastChannel
 
 ## Architecture
 
@@ -41,31 +42,44 @@ This is a Svelte-based inventory management application converted from the legac
   - `updateItem(itemId, itemData)`: Update an item
   - `trade(itemId, quantity, targetBuddyname)`: Trade an item
 
-## Communication with Parent Window
+## Communication via BroadcastChannel
 
-The app can be loaded in an iframe and communicates with the parent window using:
+The app communicates entirely through the `buddypond-inventory` BroadcastChannel. The channel is also exposed globally as `window.channel` for easy access.
 
-1. **PostMessage API**: For initial configuration
-2. **BroadcastChannel**: For real-time updates
+### Configuration
 
-### Configuration Message
+The app reads configuration from localStorage:
 
-Send this message to configure the inventory app:
+- `me` - Current user's buddyname
+- `qtokenid` - Authentication token
+
+### Opening/Loading an Inventory
+
+To load or reload an inventory (including for different users):
 
 ```javascript
-iframe.contentWindow.postMessage({
-  type: 'configure-inventory',
-  endpoint: 'https://api.example.com/inventory',
-  buddyname: 'user123',
-  token: 'auth-token-here'
-}, '*');
+const channel = new BroadcastChannel('buddypond-inventory');
+
+// Reload current user's inventory
+channel.postMessage({ action: 'reload-inventory' });
+
+// View another user's inventory
+channel.postMessage({ 
+  action: 'reload-inventory', 
+  buddyname: 'otheruser123' 
+});
 ```
 
-### Reload Inventory
+### Opening Another App
+
+The inventory can trigger other apps to open:
 
 ```javascript
-const channel = new BroadcastChannel('inventory-channel');
-channel.postMessage({ type: 'reload-inventory' });
+// From within the inventory app
+window.channel.postMessage({ 
+  action: 'open-app', 
+  app: 'fishing' 
+});
 ```
 
 ## Development
@@ -93,9 +107,11 @@ The build creates a static SPA in the `build/` directory that can be:
 
 ## Environment
 
-The app automatically detects configuration from:
-1. `window.buddypond` object (if available)
-2. Parent window messages (when in iframe)
+The app reads configuration from localStorage:
+- `me` - Current user's buddyname
+- `qtokenid` - Authentication token
+
+API endpoint is currently hard-coded but can be configured via the code.
 
 ## Legacy Code
 

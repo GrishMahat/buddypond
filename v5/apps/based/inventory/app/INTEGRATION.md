@@ -2,7 +2,7 @@
 
 ## How to Integrate the Svelte Inventory App
 
-The Svelte inventory app is designed to be loaded via iframe and communicate with the parent window using BroadcastChannel and PostMessage APIs.
+The Svelte inventory app communicates entirely via BroadcastChannel (`buddypond-inventory`). No iframe postMessage is required - just ensure localStorage has the necessary credentials.
 
 ### Step 1: Build the Svelte App
 
@@ -21,39 +21,52 @@ The build directory should be served from your web server. For example, if your 
 https://yourdomain.com/v5/apps/based/inventory/app/build/
 ```
 
-### Step 3: Load in iframe
+### Step 3: Setup localStorage and BroadcastChannel
+
+The app requires these localStorage items:
+
+```javascript
+// Set user credentials in localStorage
+localStorage.setItem('me', 'myusername');
+localStorage.setItem('qtokenid', 'my-auth-token');
+```
+
+### Step 4: Load the App
 
 #### Option A: Using iframeContent in the legacy wrapper
 
 Update your `inventory.js` to use iframe:
 
 ```javascript
-window() {
-  return {
-    id: 'inventory',
-    title: 'Buddy Inventory',
-    icon: 'desktop/assets/images/icons/icon_inventory_64.webp',
-    position: 'center',
-    parent: $('#desktop')[0],
-    width: 850,
-    height: 600,
-    // Use iframe instead of inline content
-    iframeContent: '/v5/apps/based/inventory/app/build/index.html',
-    resizable: true,
-    closable: true,
-    onLoad: (iframe) => {
-      // Configure the Svelte app once it's loaded
-      iframe.contentWindow.postMessage({
-        type: 'configure-inventory',
-        endpoint: buddypond.inventoryEndpoint,
-        buddyname: buddypond.me,
-        token: buddypond.qtokenid
-      }, '*');
-    },
-    onClose: () => {
-      this.win = null;
-    }
+async open({ context } = {}) {
+  if (!this.win) {
+    this.win = await this.bp.window({
+      id: 'inventory',
+      title: 'Buddy Inventory',
+      icon: 'desktop/assets/images/icons/icon_inventory_64.webp',
+      position: 'center',
+      parent: $('#desktop')[0],
+      width: 850,
+      height: 600,
+      iframeContent: '/v5/apps/based/inventory/app/build/index.html',
+      resizable: true,
+      closable: true,
+      onLoad: (iframe) => {
+        // If viewing another user's inventory, send via BroadcastChannel
+        if (context && context !== this.bp.me) {
+          const channel = new BroadcastChannel('buddypond-inventory');
+          channel.postMessage({ 
+            action: 'reload-inventory', 
+            buddyname: context 
+          });
+        }
+      },
+      onClose: () => {
+        this.win = null;
+      }
+    });
   }
+  return this.win;
 }
 ```
 
@@ -66,54 +79,55 @@ iframe.style.width = '100%';
 iframe.style.height = '100%';
 iframe.style.border = 'none';
 
-// Wait for iframe to load
-iframe.addEventListener('load', () => {
-  // Send configuration
-  iframe.contentWindow.postMessage({
-    type: 'configure-inventory',
-    endpoint: 'https://api.example.com/inventory',
-    buddyname: 'user123',
-    token: 'auth-token-here'
-  }, '*');
-});
-
-// Listen for messages from iframe
-window.addEventListener('message', (event) => {
-  if (event.data.type === 'inventory-ready') {
-    console.log('Inventory app is ready');
-  }
-});
-
 document.getElementById('container').appendChild(iframe);
 ```
 
-### Step 4: Communication via BroadcastChannel
+### Step 5: Communication via BroadcastChannel
 
-The Svelte app listens on the `inventory-channel` BroadcastChannel.
+The Svelte app listens on the `buddypond-inventory` BroadcastChannel and exposes it globally as `window.channel`.
 
 ```javascript
-// In your parent application
-const channel = new BroadcastChannel('inventory-channel');
+// Create or get the channel
+const channel = new BroadcastChannel('buddypond-inventory');
 
-// Reload inventory
-channel.postMessage({ type: 'reload-inventory' });
+// Reload current user's inventory
+channel.postMessage({ action: 'reload-inventory' });
+
+// View another user's inventory
+channel.postMessage({ 
+  action: 'reload-inventory', 
+  buddyname: 'otheruser123' 
+});
 
 // Listen for events from inventory app
 channel.onmessage = (event) => {
   console.log('Received from inventory:', event.data);
+  
+  // Handle open-app requests
+  if (event.data.action === 'open-app') {
+    console.log('Open app:', event.data.app);
+    // Your logic to open the requested app
+  }
 };
 ```
 
-### Configuration Options
+### BroadcastChannel Message Format
 
-The configuration message supports these properties:
+All messages use the `action` property:
 
+**Reload Inventory:**
 ```javascript
 {
-  type: 'configure-inventory',
-  endpoint: 'https://api.example.com/inventory',  // API endpoint
-  buddyname: 'user123',                            // User identifier
-  token: 'auth-token-here'                         // Authentication token
+  action: 'reload-inventory',
+  buddyname: 'username'  // Optional - defaults to current user from localStorage
+}
+```
+
+**Open Another App:**
+```javascript
+{
+  action: 'open-app',
+  app: 'fishing'  // App name to open
 }
 ```
 
@@ -149,49 +163,84 @@ Items should follow this structure:
 }
 ```
 
-### Example Integration in Legacy Code
+### Complete Integration Example
 
 ```javascript
 // In your legacy inventory.js
-async open({ context } = {}) {
-  if (!this.win) {
-    this.win = await this.bp.window({
-      id: 'inventory',
-      title: 'Buddy Inventory',
-      icon: 'desktop/assets/images/icons/icon_inventory_64.webp',
-      position: 'center',
-      width: 850,
-      height: 600,
-      iframeContent: '/v5/apps/based/inventory/app/build/index.html',
-      onLoad: (iframe) => {
-        // Wait a bit for Svelte to initialize
-        setTimeout(() => {
-          iframe.contentWindow.postMessage({
-            type: 'configure-inventory',
-            endpoint: this.bp.inventoryEndpoint || buddypond.inventoryEndpoint,
-            buddyname: context || this.bp.me,
-            token: this.bp.qtokenid || buddypond.qtokenid
-          }, '*');
-        }, 100);
-      }
-    });
+export default class Inventory {
+  constructor(bp, options = {}) {
+    this.bp = bp;
+    this.options = options;
+    this.channel = new BroadcastChannel('buddypond-inventory');
+    return this;
   }
-  return this.win;
+
+  async init() {
+    // Ensure localStorage has the required data
+    if (this.bp.me) {
+      localStorage.setItem('me', this.bp.me);
+    }
+    if (this.bp.qtokenid) {
+      localStorage.setItem('qtokenid', this.bp.qtokenid);
+    }
+    
+    return 'loaded Inventory';
+  }
+
+  async open({ context } = {}) {
+    if (!this.win) {
+      this.win = await this.bp.window({
+        id: 'inventory',
+        title: 'Buddy Inventory',
+        icon: 'desktop/assets/images/icons/icon_inventory_64.webp',
+        position: 'center',
+        parent: $('#desktop')[0],
+        width: 850,
+        height: 600,
+        iframeContent: '/v5/apps/based/inventory/app/build/index.html',
+        resizable: true,
+        closable: true,
+        onLoad: () => {
+          // Determine which user's inventory to show
+          const targetBuddyname = context || this.bp.me;
+          
+          // Send via BroadcastChannel to load inventory
+          setTimeout(() => {
+            this.channel.postMessage({ 
+              action: 'reload-inventory', 
+              buddyname: targetBuddyname 
+            });
+          }, 200); // Small delay to ensure Svelte app is ready
+        },
+        onClose: () => {
+          this.win = null;
+        }
+      });
+
+      // Listen for messages from inventory app
+      this.channel.onmessage = (event) => {
+        if (event.data.action === 'open-app') {
+          // Handle app opening requests from inventory
+          const appName = event.data.app;
+          if (this.bp.apps[appName]) {
+            this.bp.apps[appName].open();
+          }
+        }
+      };
+    }
+    return this.win;
+  }
 }
 ```
 
-### Fallback to window.buddypond
+### LocalStorage Requirements
 
-If the iframe can access the parent window's `window.buddypond` object, it will automatically configure itself:
+The app requires these localStorage items to be set before loading:
 
 ```javascript
-// In your parent window
-window.buddypond = {
-  inventoryEndpoint: 'https://api.example.com/inventory',
-  me: 'user123',
-  qtokenid: 'auth-token-here'
-};
+localStorage.setItem('me', 'current-username');
+localStorage.setItem('qtokenid', 'authentication-token');
 ```
 
-The Svelte app will detect this and configure itself automatically.
+These should be set in your app's initialization code or login flow.
 
