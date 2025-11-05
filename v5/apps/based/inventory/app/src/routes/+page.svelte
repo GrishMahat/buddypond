@@ -33,7 +33,9 @@
     me = localStorage.getItem('me');
     let token = localStorage.getItem('qtokenid');
 
+    // TODO: should be sent from parent window? maybe just hard-code for now?
     let endpoint = 'http://localhost:10000/api/inventory'
+    endpoint = 'https://buddypond.com/api/inventory'
 
     // TODO: needs to pass in context / buddyname to show inventory for specific user...
     inventoryClient.configure({ endpoint, buddyname: me, token });

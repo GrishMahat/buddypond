@@ -638,5 +638,13 @@ export default {
     "author": "BuddyPond",
     "alias": ["items-admin", "gear-admin"],
     "enumerable": false, // do not show in the app list
+  },
+  'bots': {
+    icon: 'desktop/assets/images/icons/icon_buddy-frog_64.webp',
+    label: 'Bots',
+    description: 'Manage your bots and AI assistants',
+    onClick: "bp.open('bots')",
+    categories: ['tools', 'productivity', 'ai'],
+    "enumerable": false
   }
 }
