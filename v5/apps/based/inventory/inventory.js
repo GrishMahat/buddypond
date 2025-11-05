@@ -1,9 +1,8 @@
-import bindUIEvents from './lib/bindUIEvents.js';
-import inventoryClient from './lib/inventoryClient.js';
-import renderInventory from './lib/renderInventory.js';
-import sortInventory from './lib/sortInventory.js';
+//import bindUIEvents from './lib/bindUIEvents.js';
+//import inventoryClient from './lib/inventoryClient.js';
+//import renderInventory from './lib/renderInventory.js';
+//import sortInventory from './lib/sortInventory.js';
 
-console.log("bindUIEventsbindUIEventsbindUIEvents", bindUIEvents)
 export default class Inventory {
   // constructor is required, it is called when the app is loaded
   constructor(bp, options = {}) {
@@ -14,25 +13,37 @@ export default class Inventory {
 
   // init is required, it is called when the app is opened or initialized
   async init() {
-    this.html = await this.bp.load('/v5/apps/based/inventory/inventory.html');
-    await this.bp.load('/v5/apps/based/inventory/inventory.css');
-
+    //this.html = await this.bp.load('/v5/apps/based/inventory/inventory.html');
+    //await this.bp.load('/v5/apps/based/inventory/inventory.css');
+    this.broadcastChannel();
     return 'loaded Inventory';
   }
 
   broadcastChannel() {
 
     this.receiver = new BroadcastChannel("buddypond-inventory");
+
+     this.receiver.onmessage = (event) => {
+      console.log('Inventory app received broadcast:', event.data);
+      if (event.data.action === 'open-app') {
+        // alert(event.data.app);
+        this.bp.open(event.data.app);
+      }
+    }
+
   }
 
   // can send messages if needed
   sendMessage() {
-    this.receiver.postMessage({ type: "app", app: "inventory", action: "load", src: this.options.src || null });
+    this.receiver.postMessage({ type: "app", app: "inventory", action: "reload-inventory", src: this.options.src || null });
   }
 
   async open({ context } = {}) {
     if (!this.win) {
       this.win = await this.bp.window(this.window());
+
+      return;
+      /*
       this.client = inventoryClient;
 
       this.bindUIEvents();
@@ -68,7 +79,10 @@ export default class Inventory {
       }
 
       $('.char-silhouette', this.win.content).append(profilePicture);
+      */
     }
+    this.receiver.postMessage({ type: "app", app: "inventory", action: "reload-inventory", src: null, buddyname: context || this.bp.me });
+
     return this.win;
   }
 
@@ -122,7 +136,6 @@ export default class Inventory {
   }
 }
 
-Inventory.prototype.bindUIEvents = bindUIEvents;
-// Inventory.prototype.client = inventoryClient;
-Inventory.prototype.renderInventory = renderInventory;
-Inventory.prototype.sortInventory = sortInventory;
+//Inventory.prototype.bindUIEvents = bindUIEvents;
+//Inventory.prototype.renderInventory = renderInventory;
+//Inventory.prototype.sortInventory = sortInventory;

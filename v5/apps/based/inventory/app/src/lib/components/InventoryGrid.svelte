@@ -2,7 +2,7 @@
   import InventoryItem from './InventoryItem.svelte';
   import { selectItem } from '$lib/stores/inventoryStore';
 
-  let { items } = $props();
+  let { items, buddyname, me } = $props();
 
   function handleItemClick(item) {
     selectItem(item);
@@ -12,10 +12,14 @@
 <div class="inventory-grid">
   {#if items.length === 0}
     <div class="empty-inventory">
-      <p>Your inventory is empty. Go find some items!</p>
-      <button class="btn primary" onclick={() => window.parent?.postMessage({ type: 'open-app', app: 'fishing' }, '*')}>
-        Go Fishing
-      </button>
+      {#if buddyname === me}
+        <p>Your inventory is empty. Go find some items!</p>
+        <button class="btn primary" onclick={() => window.channel?.postMessage({ action: 'open-app', app: 'fishing' }, '*')}>
+          Go Fishing
+        </button>
+      {:else}
+        <h2>{buddyname}'s Inventory is Empty</h2>
+      {/if}
     </div>
   {:else}
     {#each items as item (item.id || Math.random())}

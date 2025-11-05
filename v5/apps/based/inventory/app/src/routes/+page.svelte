@@ -10,10 +10,13 @@
   let isLoading = $state(true);
   let error = $state(null);
   let buddyname = $state(null);
+  let me = $state(null);
 
   const MAX_SLOTS = 999;
 
   onMount(async () => {
+    // TODO: this should be broadcastchannel based communication, not iframe postMessage
+    /*
     // Listen for configuration from parent window (if in iframe)
     const handleMessage = (event) => {
       if (event.data?.type === 'configure-inventory') {
@@ -23,21 +26,21 @@
         loadInventory(bn);
       }
     };
+    */
+
 
     // get me and qtokenid from localStorage if available
-    let me = localStorage.getItem('me');
+    me = localStorage.getItem('me');
     let token = localStorage.getItem('qtokenid');
 
     let endpoint = 'http://localhost:10000/api/inventory'
 
-
+    // TODO: needs to pass in context / buddyname to show inventory for specific user...
     inventoryClient.configure({ endpoint, buddyname: me, token });
     buddyname = me;
     loadInventory(me);
 
-
-    window.addEventListener('message', handleMessage);
-
+    /*
     // Try to get configuration from window.buddypond if available
     if (typeof window !== 'undefined' && window.buddypond) {
       inventoryClient.configure({
@@ -52,6 +55,7 @@
       window.parent?.postMessage({ type: 'inventory-ready' }, '*');
       isLoading = false;
     }
+    */
 
     return () => {
       window.removeEventListener('message', handleMessage);
@@ -101,11 +105,15 @@
   // Setup BroadcastChannel for communication with parent
   let channel;
   onMount(() => {
-    channel = new BroadcastChannel('inventory-channel');
-    
+    channel = new BroadcastChannel('buddypond-inventory');
+    window.channel = channel;
     channel.onmessage = (event) => {
       console.log('Received broadcast:', event.data);
-      if (event.data.type === 'reload-inventory') {
+      if (event.data.action === 'reload-inventory') {
+        if (event.data.buddyname) {
+          buddyname = event.data.buddyname;
+          console.log("Set buddyname from broadcast:", buddyname);
+        }
         loadInventory(buddyname);
       }
     };
@@ -140,7 +148,7 @@
           <!-- Optional header content -->
         </div>
 
-        <InventoryGrid items={$filteredAndSortedItems} />
+        <InventoryGrid {buddyname} {me} items={$filteredAndSortedItems} />
 
         {#if $selectedItem}
           <div class="selected-item-actions">
