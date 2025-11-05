@@ -70,8 +70,6 @@ export default class Fishing {
       await this.savePlayerSettings('auto_equip_enabled', enabled);
     });
 
-
-
   }
 
   savePlayerSettings(key, value) {
@@ -103,7 +101,8 @@ export default class Fishing {
       parent: $('#desktop')[0],
       width: 850,
       height: 600,
-      content: this.html,
+      // content: this.html,
+      iframeContent: '/v5/apps/based/fishing/app/build/',
       resizable: true,
       closable: true,
       onClose: () => {

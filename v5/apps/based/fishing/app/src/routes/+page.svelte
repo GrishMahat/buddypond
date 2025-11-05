@@ -36,8 +36,8 @@
     let fishingEndpoint = 'https://buddypond.com/api/fishing';
     let inventoryEndpoint = 'https://buddypond.com/api/inventory';
 
-    fishingEndpoint = 'http://localhost:9999/api/fishing';
-    inventoryEndpoint = 'http://localhost:10000/api/inventory';
+    // fishingEndpoint = 'http://192.168.200.59:9999/api/fishing';
+    // inventoryEndpoint = 'http://192.168.200.59:10000/api/inventory';
 
 
     fishingClient.configure({ endpoint: fishingEndpoint, buddyname: me, token });
