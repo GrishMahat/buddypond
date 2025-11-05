@@ -1,0 +1,76 @@
+:root {
+  --gradient_water-background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%);
+  --desktop_element-background: rgba(255, 255, 255, 0.9);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  min-height: 100vh;
+}
+
+.fishing-app {
+  font-family: "Trebuchet MS", sans-serif;
+  background: var(--gradient_water-background);
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.fishing-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.fishing-header h1 {
+  font-size: 2em;
+  color: #004466;
+  margin: 0;
+}
+
+.fishing-status {
+  display: block;
+  font-weight: bold;
+  color: #006600;
+  margin-top: 5px;
+}
+
+.fishing-status.error {
+  color: #d32f2f;
+}
+
+.fishing-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+  flex: 1;
+}
+
+.fishing-sidebar {
+  background: var(--desktop_element-background);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fishing-main {
+    grid-template-columns: 1fr;
+  }
+
+  .fishing-sidebar {
+    order: 2;
+  }
+}
