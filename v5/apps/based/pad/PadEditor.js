@@ -5,7 +5,6 @@ export default class PadEditor {
         if (!parentElement) {
             throw new Error('PadEditor requires a parent element');
         }
-
         options.files = options.files || [];
         this.bp = options.bp;
         this.options = options;
@@ -27,7 +26,6 @@ export default class PadEditor {
         // Create controls
         this.controls = document.createElement('div');
         this.controls.className = 'editor-controls';
-        
         // Create main content area
         this.contentArea = document.createElement('div');
         this.contentArea.className = 'editor-content';
@@ -75,6 +73,7 @@ export default class PadEditor {
             { text: 'Edit', action: () => this.onEdit() },
             { text: 'Update', action: () => this.onUpdate() },
             { text: 'Delete', action: () => this.onDelete() },
+            { text: 'Clear', action: () => this.setContent('') }
 
             // { text: 'Cancel', action: () => this.onCancel() }
         ];
